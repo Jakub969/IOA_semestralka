@@ -16,7 +16,7 @@
         static SelectionBoxFramed()
         {
             fillBrush = new SolidBrush(Color.FromArgb(100, 0, 116, 231));
-            borderPen = new Pen(Color.FromArgb(180, 0, 116, 231));
+            borderPen = new Pen(Color.FromArgb(230, 0, 116, 231));
         }
 
         /// <summary>

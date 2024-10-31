@@ -3,15 +3,23 @@ using System.Xml.Linq;
 
 namespace cv1.Network
 {
-    public class NetworkData: IDrawable2DObject
+    public class NetworkData : IDrawable2DObject
     {
-        private List<NetworkNode> nodes = []; 
+        private List<NetworkNode> nodes = [];
 
         private Bitmap? bitmapOriginalMap;
         public bool BackgroundVisible { get; set; }
         public List<NetworkNode> Nodes { get { return nodes; } }
 
         public Keys Key { get; set; }
+
+        public bool SeletedAny
+        {
+            get
+            {
+                return nodes.Any(x => x.Selected);
+            }
+        }
 
         public NetworkData(string parBitmapPath)
         {
@@ -79,6 +87,17 @@ namespace cv1.Network
             }
 
             return false;
+        }
+
+        public void RemoveSelected()
+        {
+            for (int i = 0; i < nodes.Count; i++)
+            {
+                if (nodes[i].Selected == true)
+                {
+                    nodes.RemoveAt(i); 
+                }
+            }
         }
 
         public bool IsHitByMouse(Point mousePosition)

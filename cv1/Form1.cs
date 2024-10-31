@@ -133,6 +133,15 @@ namespace cv1
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             network.Key = e.KeyCode;
+
+            if (e.KeyCode == Keys.Delete && network.SeletedAny)
+            {
+               if (MessageBox.Show("Delete selected elements?", "Network editor", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    network.RemoveSelected();
+                    doubleBufferPanelDrawing.Invalidate();
+                }
+            }
         }
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)
