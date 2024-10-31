@@ -2,6 +2,7 @@ using cv1.Enums;
 using cv1.Network;
 using cv1.Tools;
 using Microsoft.VisualBasic.Devices;
+using System.Drawing;
 
 namespace cv1
 {
@@ -9,6 +10,7 @@ namespace cv1
     {
         private EnumEditorState state = EnumEditorState.None;
         private NetworkData network;
+        private bool framedSelectionBox = true; 
 
         public Form1()
         {
@@ -28,7 +30,17 @@ namespace cv1
             if (state == EnumEditorState.Selecting)
             {
                 g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.Default;
-                SelectionBox.Draw(g);
+
+                if (framedSelectionBox)
+                {
+                    // selection box without frame
+                    SelectionBoxFramed.Draw(g);
+                }
+                else
+                {
+                    // selection box with frame
+                    SelectionBox.Draw(g);
+                }
             }
         }
 
@@ -42,8 +54,11 @@ namespace cv1
                 {
                     network.SelectNode(new Rectangle(), ctrlPressed);
                     state = EnumEditorState.SelectBegin;
-                    SelectionBox.StartingMousePosition = e.Location;
-                    SelectionBox.IsActive = true;
+
+                    if (framedSelectionBox)
+                        SelectionBoxFramed.InitSelectionBox(e.Location);
+                    else
+                        SelectionBox.InitSelectionBox(e.Location);
                 }
             }
             else if (e.Button == MouseButtons.Right)
@@ -61,8 +76,18 @@ namespace cv1
                 if (state == EnumEditorState.Selecting || state == EnumEditorState.SelectBegin)
                 {
                     state = EnumEditorState.Selecting;
-                    using Region r = SelectionBox.Track(e.Location);
-                    doubleBufferPanelDrawing.Invalidate(r);
+
+                    if (framedSelectionBox)
+                    {
+                        using Region r = SelectionBoxFramed.Track(e.Location);
+                        doubleBufferPanelDrawing.Invalidate(r);
+                    }
+                    else
+                    {
+                        using Region r = SelectionBox.Track(e.Location);
+                        doubleBufferPanelDrawing.Invalidate(r);
+                    }
+
                     return;
                 }
             }
@@ -75,12 +100,16 @@ namespace cv1
             if (state == EnumEditorState.Selecting)
             {
                 bool ctrlPressed = (network.Key == Keys.ControlKey);
-                network.SelectNode(SelectionBox.TrackedRectangle, ctrlPressed);
+
+                if (framedSelectionBox)
+                    network.SelectNode(SelectionBoxFramed.TrackedRectangle, ctrlPressed);
+                else
+                    network.SelectNode(SelectionBox.TrackedRectangle, ctrlPressed);
             }
 
             state = EnumEditorState.None;
+            SelectionBoxFramed.IsActive = false;
             SelectionBox.IsActive = false;
-
             doubleBufferPanelDrawing.Invalidate();
         }
 

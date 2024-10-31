@@ -3,8 +3,9 @@
     public static class SelectionBox
     {
         private static readonly SolidBrush fillBrush;
-        public static Point StartingMousePosition; 
         private static Rectangle trackerRectangleFromPreviousStep;
+
+        public static Point StartingMousePosition;
         public static bool IsActive { get; set; }
         public static Rectangle TrackedRectangle { get { return trackerRectangleFromPreviousStep; } }
 
@@ -12,6 +13,13 @@
         {
             fillBrush = new SolidBrush(Color.FromArgb(120, 0, 116, 231));
             IsActive = false;
+        }
+
+        public static void InitSelectionBox(Point currentMouseLocation)
+        {
+            StartingMousePosition = currentMouseLocation;
+            IsActive = true;
+            trackerRectangleFromPreviousStep = new Rectangle(0, 0, -1, -1);
         }
 
         private static Rectangle GetRect(Point endPoint)
