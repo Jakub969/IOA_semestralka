@@ -1,11 +1,14 @@
 ﻿using cv1.Interfaces;
-using System.Xml.Linq;
 
 namespace cv1.Network
 {
     public class NetworkData : IDrawable2DObject
     {
+        private int nodeID = 0;
+        private int edgeID = 0;
+
         private List<NetworkNode> nodes = [];
+        private List<NetworkEdge> edges = [];
 
         private Bitmap? bitmapOriginalMap;
         public bool BackgroundVisible { get; set; }
@@ -53,6 +56,11 @@ namespace cv1.Network
             }
         }
 
+        public void InsertNode(Point parPosition)
+        {
+            nodes.Add(new(parPosition, nodeID));
+        }
+
         public bool SelectNode(Point mousePosition, bool addSelect = false)
         {
             if (!addSelect)
@@ -91,7 +99,7 @@ namespace cv1.Network
 
         public void RemoveSelected()
         {
-            for (int i = 0; i < nodes.Count; i++)
+            for (int i = nodes.Count - 1; i >= 0; i--)
             {
                 if (nodes[i].Selected == true)
                 {

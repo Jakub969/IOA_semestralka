@@ -63,7 +63,7 @@ namespace cv1
             }
             else if (e.Button == MouseButtons.Right)
             {
-                network.Nodes.Add(new(e.Location));
+                network.InsertNode(e.Location);
             }
 
             doubleBufferPanelDrawing.Invalidate();

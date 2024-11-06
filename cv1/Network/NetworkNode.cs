@@ -5,9 +5,13 @@ namespace cv1.Network
 
     public class NetworkNode : IDrawable2DObject
     {
+        private int id;
+
         private Size size = new (10, 10);
         public bool Selected { get; set; }
         public Point Position { get; set; }
+
+        public int ID { get { return id; } }
 
         public Rectangle BoundingRectangle 
         {
@@ -17,9 +21,10 @@ namespace cv1.Network
             }
         }
 
-        public NetworkNode(Point parPosition)
+        public NetworkNode(Point parPosition, int parID)
         {
             Position = parPosition;
+            id = parID;
         }
 
         public void Draw(Graphics g)
