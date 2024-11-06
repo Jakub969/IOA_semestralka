@@ -11,7 +11,7 @@ namespace cv1.Network
         private NetworkNode endNode = parEndNode;
 
         public NetworkNode StartNode { get => startNode; }
-        public NetworkNode EndNode { get => EndNode; }
+        public NetworkNode EndNode { get => endNode; }
 
         public bool Selected { get; set; }
 

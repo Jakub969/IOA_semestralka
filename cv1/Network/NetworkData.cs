@@ -67,6 +67,9 @@ namespace cv1.Network
         }
         public bool InsertEdge(NetworkNode parStartNode, NetworkNode parEndNode)
         {
+            if (parStartNode == parEndNode)
+                return false;
+
             foreach (NetworkEdge edge in edges)
             {
                 if ((edge.StartNode == parStartNode && edge.EndNode == parEndNode) ||
