@@ -29,22 +29,38 @@
         private void InitializeComponent()
         {
             panelTools = new Panel();
+            groupBoxState = new GroupBox();
             checkBoxBackgroundVisible = new CheckBox();
             doubleBufferPanelDrawing = new DoubleBufferPanel();
-            groupBox1 = new GroupBox();
+            radioButtonEdit = new RadioButton();
+            radioButtonInsertNode = new RadioButton();
+            radioButtonInsertEdge = new RadioButton();
             panelTools.SuspendLayout();
+            groupBoxState.SuspendLayout();
             SuspendLayout();
             // 
             // panelTools
             // 
             panelTools.BackColor = SystemColors.AppWorkspace;
-            panelTools.Controls.Add(groupBox1);
+            panelTools.Controls.Add(groupBoxState);
             panelTools.Controls.Add(checkBoxBackgroundVisible);
             panelTools.Dock = DockStyle.Left;
             panelTools.Location = new Point(0, 0);
             panelTools.Name = "panelTools";
             panelTools.Size = new Size(179, 798);
             panelTools.TabIndex = 0;
+            // 
+            // groupBoxState
+            // 
+            groupBoxState.Controls.Add(radioButtonInsertEdge);
+            groupBoxState.Controls.Add(radioButtonInsertNode);
+            groupBoxState.Controls.Add(radioButtonEdit);
+            groupBoxState.Location = new Point(12, 46);
+            groupBoxState.Name = "groupBoxState";
+            groupBoxState.Size = new Size(161, 103);
+            groupBoxState.TabIndex = 2;
+            groupBoxState.TabStop = false;
+            groupBoxState.Text = "Editor state";
             // 
             // checkBoxBackgroundVisible
             // 
@@ -71,14 +87,40 @@
             doubleBufferPanelDrawing.MouseMove += doubleBufferPanelDrawing_MouseMove;
             doubleBufferPanelDrawing.MouseUp += doubleBufferPanelDrawing_MouseUp;
             // 
-            // groupBox1
+            // radioButtonEdit
             // 
-            groupBox1.Location = new Point(12, 46);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(161, 103);
-            groupBox1.TabIndex = 2;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "groupBox1";
+            radioButtonEdit.AutoSize = true;
+            radioButtonEdit.Checked = true;
+            radioButtonEdit.Location = new Point(11, 22);
+            radioButtonEdit.Name = "radioButtonEdit";
+            radioButtonEdit.Size = new Size(45, 19);
+            radioButtonEdit.TabIndex = 0;
+            radioButtonEdit.TabStop = true;
+            radioButtonEdit.Text = "Edit";
+            radioButtonEdit.UseVisualStyleBackColor = true;
+            radioButtonEdit.CheckedChanged += radioButtonEdit_CheckedChanged;
+            // 
+            // radioButtonInsertNode
+            // 
+            radioButtonInsertNode.AutoSize = true;
+            radioButtonInsertNode.Location = new Point(11, 47);
+            radioButtonInsertNode.Name = "radioButtonInsertNode";
+            radioButtonInsertNode.Size = new Size(84, 19);
+            radioButtonInsertNode.TabIndex = 1;
+            radioButtonInsertNode.Text = "Insert node";
+            radioButtonInsertNode.UseVisualStyleBackColor = true;
+            radioButtonInsertNode.CheckedChanged += radioButtonInsertNode_CheckedChanged;
+            // 
+            // radioButtonInsertEdge
+            // 
+            radioButtonInsertEdge.AutoSize = true;
+            radioButtonInsertEdge.Location = new Point(11, 72);
+            radioButtonInsertEdge.Name = "radioButtonInsertEdge";
+            radioButtonInsertEdge.Size = new Size(83, 19);
+            radioButtonInsertEdge.TabIndex = 2;
+            radioButtonInsertEdge.Text = "Insert edge";
+            radioButtonInsertEdge.UseVisualStyleBackColor = true;
+            radioButtonInsertEdge.CheckedChanged += radioButtonInsertEdge_CheckedChanged;
             // 
             // Form1
             // 
@@ -96,6 +138,8 @@
             KeyUp += Form1_KeyUp;
             panelTools.ResumeLayout(false);
             panelTools.PerformLayout();
+            groupBoxState.ResumeLayout(false);
+            groupBoxState.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -104,6 +148,9 @@
         private Panel panelTools;
         private DoubleBufferPanel doubleBufferPanelDrawing;
         private CheckBox checkBoxBackgroundVisible;
-        private GroupBox groupBox1;
+        private GroupBox groupBoxState;
+        private RadioButton radioButtonInsertEdge;
+        private RadioButton radioButtonInsertNode;
+        private RadioButton radioButtonEdit;
     }
 }

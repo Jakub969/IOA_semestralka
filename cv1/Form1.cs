@@ -9,8 +9,10 @@ namespace cv1
     public partial class Form1 : Form
     {
         private EnumEditorState state = EnumEditorState.None;
+        private EnumEditorMode mode = EnumEditorMode.Edit;
+
         private NetworkData network;
-        private bool framedSelectionBox = true; 
+        private bool framedSelectionBox = true;
 
         public Form1()
         {
@@ -136,7 +138,7 @@ namespace cv1
 
             if (e.KeyCode == Keys.Delete && network.SeletedAny)
             {
-               if (MessageBox.Show("Delete selected elements?", "Network editor", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show("Delete selected elements?", "Network editor", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     network.RemoveSelected();
                     doubleBufferPanelDrawing.Invalidate();
@@ -147,6 +149,25 @@ namespace cv1
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
             network.Key = Keys.None;
+        }
+
+        private void radioButtonEdit_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButtonEdit.Checked) 
+                mode = EnumEditorMode.Edit;
+        }
+
+        private void radioButtonInsertNode_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButtonEdit.Checked)
+                mode = EnumEditorMode.InsertNode;
+        }
+
+        private void radioButtonInsertEdge_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButtonEdit.Checked)
+                mode = EnumEditorMode.InsertEdge;
+
         }
     }
 }
