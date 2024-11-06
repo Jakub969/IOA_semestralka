@@ -60,6 +60,10 @@ namespace cv1.Network
         {
             nodes.Add(new(parPosition, nodeID++));
         }
+        public void InsertEdge(NetworkNode parStartNode, NetworkNode parEndNode)
+        {
+            edges.Add(new(parStartNode, parEndNode, nodeID++));
+        }
 
         public bool SelectNode(Point mousePosition, bool addSelect = false)
         {

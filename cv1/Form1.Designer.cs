@@ -31,12 +31,14 @@
             panelTools = new Panel();
             checkBoxBackgroundVisible = new CheckBox();
             doubleBufferPanelDrawing = new DoubleBufferPanel();
+            groupBox1 = new GroupBox();
             panelTools.SuspendLayout();
             SuspendLayout();
             // 
             // panelTools
             // 
             panelTools.BackColor = SystemColors.AppWorkspace;
+            panelTools.Controls.Add(groupBox1);
             panelTools.Controls.Add(checkBoxBackgroundVisible);
             panelTools.Dock = DockStyle.Left;
             panelTools.Location = new Point(0, 0);
@@ -69,6 +71,15 @@
             doubleBufferPanelDrawing.MouseMove += doubleBufferPanelDrawing_MouseMove;
             doubleBufferPanelDrawing.MouseUp += doubleBufferPanelDrawing_MouseUp;
             // 
+            // groupBox1
+            // 
+            groupBox1.Location = new Point(12, 46);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(161, 103);
+            groupBox1.TabIndex = 2;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "groupBox1";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -93,5 +104,6 @@
         private Panel panelTools;
         private DoubleBufferPanel doubleBufferPanelDrawing;
         private CheckBox checkBoxBackgroundVisible;
+        private GroupBox groupBox1;
     }
 }
