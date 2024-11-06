@@ -33,8 +33,8 @@ namespace cv1.Network
             int posX = (int)((pEnd.X - pStart.X) / 2.0f);
             int posY = (int)((pEnd.Y - pStart.Y) / 2.0f);
 
-            posX += posX >= 0 ? pStart.X : pEnd.X;
-            posY += posY >= 0 ? pStart.Y : pEnd.Y;
+            posX = posX >= 0 ? posX + pStart.X : pEnd.X - posX;
+            posY = posY >= 0 ? posY + pStart.Y : pEnd.Y - posY;
 
             using Font f = new(FontFamily.GenericSansSerif, 9);
             g.DrawString(id.ToString(), f, Brushes.Red, new PointF(posX, posY));

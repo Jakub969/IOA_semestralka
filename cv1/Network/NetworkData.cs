@@ -50,7 +50,12 @@ namespace cv1.Network
                 g.DrawImage(bitmapOriginalMap, 0, 0);
             }
 
-            foreach(NetworkNode node in nodes)
+            foreach (NetworkEdge edge in edges)
+            {
+                edge.Draw(g);
+            }
+
+            foreach (NetworkNode node in nodes)
             {
                 node.Draw(g);
             }
@@ -60,9 +65,17 @@ namespace cv1.Network
         {
             nodes.Add(new(parPosition, nodeID++));
         }
-        public void InsertEdge(NetworkNode parStartNode, NetworkNode parEndNode)
+        public bool InsertEdge(NetworkNode parStartNode, NetworkNode parEndNode)
         {
-            edges.Add(new(parStartNode, parEndNode, nodeID++));
+            foreach (NetworkEdge edge in edges)
+            {
+                if ((edge.StartNode == parStartNode && edge.EndNode == parEndNode) ||
+                    (edge.StartNode == parEndNode && edge.EndNode == parStartNode))
+                    return false;
+            }
+
+            edges.Add(new(parStartNode, parEndNode, edgeID++));
+            return true;
         }
 
         public bool SelectNode(Point mousePosition, bool addSelect = false)
@@ -110,6 +123,19 @@ namespace cv1.Network
                     nodes.RemoveAt(i); 
                 }
             }
+        }
+
+        public NetworkNode? IsNodeHitByMouse(Point parMousePosition)
+        {
+            foreach (NetworkNode node in nodes)
+            {
+                if (node.IsHitByMouse(parMousePosition))
+                {
+                    return node;
+                }
+            }
+
+            return null;
         }
 
         public bool IsHitByMouse(Point mousePosition)

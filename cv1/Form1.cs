@@ -3,6 +3,7 @@ using cv1.Network;
 using cv1.Tools;
 using Microsoft.VisualBasic.Devices;
 using System.Drawing;
+using static System.ComponentModel.Design.ObjectSelectorEditor;
 
 namespace cv1
 {
@@ -11,8 +12,11 @@ namespace cv1
         private EnumEditorState state = EnumEditorState.None;
         private EnumEditorMode mode = EnumEditorMode.Edit;
 
+        private Point currentMousePos; 
         private NetworkData network;
         private bool framedSelectionBox = true;
+
+        private NetworkNode? edgeNodeStart = null;
 
         public Form1()
         {
@@ -29,19 +33,30 @@ namespace cv1
                 network.Draw(g);
             }
 
-            if (state == EnumEditorState.Selecting)
+            if (mode == EnumEditorMode.Edit)
             {
-                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.Default;
+                if (state == EnumEditorState.Selecting)
+                {
+                    g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.Default;
 
-                if (framedSelectionBox)
-                {
-                    // selection box without frame
-                    SelectionBoxFramed.Draw(g);
+                    if (framedSelectionBox)
+                    {
+                        // selection box without frame
+                        SelectionBoxFramed.Draw(g);
+                    }
+                    else
+                    {
+                        // selection box with frame
+                        SelectionBox.Draw(g);
+                    }
                 }
-                else
+            }
+            if (mode == EnumEditorMode.InsertEdge)
+            {
+                if (edgeNodeStart != null && currentMousePos.X != 0 && currentMousePos.Y != 0)
                 {
-                    // selection box with frame
-                    SelectionBox.Draw(g);
+                    using Pen p = new(Color.DarkGray, 2.0f);
+                    g.DrawLine(p, edgeNodeStart.Position, currentMousePos);
                 }
             }
         }
@@ -50,22 +65,35 @@ namespace cv1
         {
             if (e.Button == MouseButtons.Left)
             {
-                bool ctrlPressed = (network.Key == Keys.ControlKey);
-
-                if (!network.SelectNode(e.Location, ctrlPressed))
+                if (mode == EnumEditorMode.Edit)
                 {
-                    network.SelectNode(new Rectangle(), ctrlPressed);
-                    state = EnumEditorState.SelectBegin;
+                    bool ctrlPressed = (network.Key == Keys.ControlKey);
 
-                    if (framedSelectionBox)
-                        SelectionBoxFramed.InitSelectionBox(e.Location);
-                    else
-                        SelectionBox.InitSelectionBox(e.Location);
+                    if (!network.SelectNode(e.Location, ctrlPressed))
+                    {
+                        network.SelectNode(new Rectangle(), ctrlPressed);
+                        state = EnumEditorState.SelectBegin;
+
+                        if (framedSelectionBox)
+                            SelectionBoxFramed.InitSelectionBox(e.Location);
+                        else
+                            SelectionBox.InitSelectionBox(e.Location);
+                    }
+                }
+                else if (mode == EnumEditorMode.InsertNode)
+                {
+                    network.InsertNode(e.Location);
+                }
+                else if (mode == EnumEditorMode.InsertEdge)
+                {
+                    edgeNodeStart = network.IsNodeHitByMouse(e.Location);
+
+                    if (edgeNodeStart != null)
+                        state = EnumEditorState.InsertEdge;
                 }
             }
             else if (e.Button == MouseButtons.Right)
             {
-                network.InsertNode(e.Location);
             }
 
             doubleBufferPanelDrawing.Invalidate();
@@ -75,22 +103,29 @@ namespace cv1
         {
             if (e.Button == MouseButtons.Left)
             {
-                if (state == EnumEditorState.Selecting || state == EnumEditorState.SelectBegin)
+                if (mode == EnumEditorMode.Edit)
                 {
-                    state = EnumEditorState.Selecting;
-
-                    if (framedSelectionBox)
+                    if (state == EnumEditorState.Selecting || state == EnumEditorState.SelectBegin)
                     {
-                        using Region r = SelectionBoxFramed.Track(e.Location);
-                        doubleBufferPanelDrawing.Invalidate(r);
-                    }
-                    else
-                    {
-                        using Region r = SelectionBox.Track(e.Location);
-                        doubleBufferPanelDrawing.Invalidate(r);
-                    }
+                        state = EnumEditorState.Selecting;
 
-                    return;
+                        if (framedSelectionBox)
+                        {
+                            using Region r = SelectionBoxFramed.Track(e.Location);
+                            doubleBufferPanelDrawing.Invalidate(r);
+                        }
+                        else
+                        {
+                            using Region r = SelectionBox.Track(e.Location);
+                            doubleBufferPanelDrawing.Invalidate(r);
+                        }
+
+                        return;
+                    }
+                }
+                if (mode == EnumEditorMode.InsertEdge)
+                {
+                    currentMousePos = e.Location;
                 }
             }
 
@@ -99,19 +134,38 @@ namespace cv1
 
         private void doubleBufferPanelDrawing_MouseUp(object sender, MouseEventArgs e)
         {
-            if (state == EnumEditorState.Selecting)
+            if (mode == EnumEditorMode.Edit)
             {
-                bool ctrlPressed = (network.Key == Keys.ControlKey);
+                if (state == EnumEditorState.Selecting)
+                {
+                    bool ctrlPressed = (network.Key == Keys.ControlKey);
 
-                if (framedSelectionBox)
-                    network.SelectNode(SelectionBoxFramed.TrackedRectangle, ctrlPressed);
-                else
-                    network.SelectNode(SelectionBox.TrackedRectangle, ctrlPressed);
+                    if (framedSelectionBox)
+                        network.SelectNode(SelectionBoxFramed.TrackedRectangle, ctrlPressed);
+                    else
+                        network.SelectNode(SelectionBox.TrackedRectangle, ctrlPressed);
+                }
+            }
+            if (mode == EnumEditorMode.InsertEdge)
+            {
+                if (edgeNodeStart != null)
+                {
+                    NetworkNode? edgeNodeEnd = network.IsNodeHitByMouse(e.Location);
+
+                    if (edgeNodeEnd != null)
+                    {
+                        if (!network.InsertEdge(edgeNodeStart, edgeNodeEnd))
+                            MessageBox.Show("Can not insert. Edge exists.", "Network editor", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
             }
 
             state = EnumEditorState.None;
             SelectionBoxFramed.IsActive = false;
             SelectionBox.IsActive = false;
+            edgeNodeStart = null;
+            currentMousePos = new(0, 0);
+
             doubleBufferPanelDrawing.Invalidate();
         }
 
@@ -159,13 +213,13 @@ namespace cv1
 
         private void radioButtonInsertNode_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioButtonEdit.Checked)
+            if (radioButtonInsertNode.Checked)
                 mode = EnumEditorMode.InsertNode;
         }
 
         private void radioButtonInsertEdge_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioButtonEdit.Checked)
+            if (radioButtonInsertEdge.Checked)
                 mode = EnumEditorMode.InsertEdge;
 
         }
