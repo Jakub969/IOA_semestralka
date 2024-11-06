@@ -58,7 +58,7 @@ namespace cv1.Network
 
         public void InsertNode(Point parPosition)
         {
-            nodes.Add(new(parPosition, nodeID));
+            nodes.Add(new(parPosition, nodeID++));
         }
 
         public bool SelectNode(Point mousePosition, bool addSelect = false)

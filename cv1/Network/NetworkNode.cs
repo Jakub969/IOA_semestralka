@@ -34,6 +34,9 @@ namespace cv1.Network
             g.FillEllipse(Brushes.Orange, boundRect);
             g.DrawEllipse(Pens.Red, boundRect);
 
+            using Font f = new(FontFamily.GenericSansSerif, 9);
+            g.DrawString(id.ToString(), f, Brushes.Red, new PointF(Position.X + (int)(size.Width / 2.0), Position.Y));
+
             if (Selected)
             {
                 Rectangle selectRetangle = BoundingRectangle;
