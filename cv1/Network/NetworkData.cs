@@ -1,16 +1,25 @@
 ﻿using cv1.Interfaces;
+using System.Runtime.Serialization;
 
 namespace cv1.Network
 {
+    [DataContract(Name = "NetworkNode")]
     public class NetworkData : IDrawable2DObject
     {
+        [DataMember()]
         private int nodeID = 0;
+        [DataMember()]
         private int edgeID = 0;
 
+        [DataMember()]
         private List<NetworkNode> nodes = [];
+        [DataMember()]
         private List<NetworkEdge> edges = [];
+        [DataMember()]
+        private string? bitmapPath;
 
         private Bitmap? bitmapOriginalMap;
+        [DataMember()]
         public bool BackgroundVisible { get; set; }
         public List<NetworkNode> Nodes { get { return nodes; } }
 
@@ -28,13 +37,14 @@ namespace cv1.Network
         {
             BackgroundVisible = true;  
             Key = Keys.None;    
+            bitmapPath = parBitmapPath;
 
-            if (string.IsNullOrEmpty(parBitmapPath))
+            if (string.IsNullOrEmpty(bitmapPath))
                 return;
 
             try
             {
-                bitmapOriginalMap = new(parBitmapPath);
+                bitmapOriginalMap = new(bitmapPath);
             }
             catch (Exception e)
             {

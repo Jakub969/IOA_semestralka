@@ -1,9 +1,10 @@
 ﻿using cv1.Interfaces;
-using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Runtime.Serialization;
 
 namespace cv1.Network
 {
+    [DataContract(Name="NetworkData")]
     public class NetworkEdge(NetworkNode parStartNode, NetworkNode parEndNode, int parID) : IDrawable2DObject
     {
         private int id = parID;

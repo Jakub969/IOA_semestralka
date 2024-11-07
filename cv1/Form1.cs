@@ -230,5 +230,24 @@ namespace cv1
         {
 
         }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.InitialDirectory = @"Documents";
+            openFileDialog.RestoreDirectory = true;
+            openFileDialog.Title = "Browse XML Files";
+            openFileDialog.DefaultExt = "xml";
+            openFileDialog.Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*";
+            openFileDialog.FilterIndex = 2;
+            openFileDialog.CheckFileExists = true;
+            openFileDialog.CheckPathExists = true;
+            openFileDialog.ShowDialog();
+        }
     }
 }
