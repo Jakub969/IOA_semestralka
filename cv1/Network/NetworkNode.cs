@@ -1,12 +1,14 @@
 ﻿using cv1.Interfaces;
+using System.Runtime.Serialization;
 
 namespace cv1.Network
 {
-
+    [DataContract(Name = "NetworkNode")]
     public class NetworkNode : IDrawable2DObject
     {
+        [DataMember()]
         private int id;
-
+        [DataMember()]
         private Size size = new (10, 10);
         public bool Selected { get; set; }
         public Point Position { get; set; }

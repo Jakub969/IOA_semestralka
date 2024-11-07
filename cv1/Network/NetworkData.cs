@@ -20,6 +20,8 @@ namespace cv1.Network
 
         private Bitmap? bitmapOriginalMap;
         [DataMember()]
+
+        public int BackgroundAlpha { get; set; }
         public bool BackgroundVisible { get; set; }
         public List<NetworkNode> Nodes { get { return nodes; } }
 
@@ -58,6 +60,10 @@ namespace cv1.Network
             if (BackgroundVisible && bitmapOriginalMap != null)
             {
                 g.DrawImage(bitmapOriginalMap, 0, 0);
+                Size bitmapSize = bitmapOriginalMap.Size;
+
+                using SolidBrush semiTransBrush = new (Color.FromArgb(255-BackgroundAlpha, 255, 255, 255));
+                g.FillRectangle(semiTransBrush, 0, 0, bitmapSize.Width, bitmapSize.Height);
             }
 
             foreach (NetworkEdge edge in edges)

@@ -228,7 +228,8 @@ namespace cv1
 
         private void trackBarBackgroundTransparency_Scroll(object sender, EventArgs e)
         {
-
+            network.BackgroundAlpha = trackBarBackgroundTransparency.Value;
+            doubleBufferPanelDrawing.Invalidate();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)

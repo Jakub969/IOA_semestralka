@@ -76,7 +76,6 @@
             // 
             trackBarBackgroundTransparency.Location = new Point(12, 55);
             trackBarBackgroundTransparency.Maximum = 255;
-            trackBarBackgroundTransparency.Minimum = 60;
             trackBarBackgroundTransparency.Name = "trackBarBackgroundTransparency";
             trackBarBackgroundTransparency.Size = new Size(161, 45);
             trackBarBackgroundTransparency.TabIndex = 3;
@@ -174,32 +173,32 @@
             // newToolStripMenuItem
             // 
             newToolStripMenuItem.Name = "newToolStripMenuItem";
-            newToolStripMenuItem.Size = new Size(180, 22);
+            newToolStripMenuItem.Size = new Size(112, 22);
             newToolStripMenuItem.Text = "New";
             // 
             // openToolStripMenuItem
             // 
             openToolStripMenuItem.Name = "openToolStripMenuItem";
-            openToolStripMenuItem.Size = new Size(180, 22);
+            openToolStripMenuItem.Size = new Size(112, 22);
             openToolStripMenuItem.Text = "Open";
             // 
             // closeToolStripMenuItem
             // 
             closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            closeToolStripMenuItem.Size = new Size(180, 22);
+            closeToolStripMenuItem.Size = new Size(112, 22);
             closeToolStripMenuItem.Text = "Close";
             // 
             // saveAsToolStripMenuItem
             // 
             saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            saveAsToolStripMenuItem.Size = new Size(180, 22);
+            saveAsToolStripMenuItem.Size = new Size(112, 22);
             saveAsToolStripMenuItem.Text = "Save as";
             saveAsToolStripMenuItem.Click += saveAsToolStripMenuItem_Click;
             // 
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(180, 22);
+            exitToolStripMenuItem.Size = new Size(112, 22);
             exitToolStripMenuItem.Text = "Exit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 

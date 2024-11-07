@@ -7,15 +7,17 @@ namespace cv1.Network
     [DataContract(Name="NetworkData")]
     public class NetworkEdge(NetworkNode parStartNode, NetworkNode parEndNode, int parID) : IDrawable2DObject
     {
+        [DataMember()]
         private int id = parID;
+        [DataMember()]
         private NetworkNode startNode = parStartNode;
+        [DataMember()]
         private NetworkNode endNode = parEndNode;
 
         public NetworkNode StartNode { get => startNode; }
         public NetworkNode EndNode { get => endNode; }
 
         public bool Selected { get; set; }
-
 
 
         public void Draw(Graphics g)
