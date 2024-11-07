@@ -12,7 +12,7 @@ namespace cv1
         private EnumEditorState state = EnumEditorState.None;
         private EnumEditorMode mode = EnumEditorMode.Edit;
 
-        private Point currentMousePos; 
+        private Point currentMousePos;
         private NetworkData network;
         private bool framedSelectionBox = true;
 
@@ -183,6 +183,8 @@ namespace cv1
             if (network != null)
                 network.BackgroundVisible = checkBoxBackgroundVisible.Checked;
 
+            trackBarBackgroundTransparency.Enabled = checkBoxBackgroundVisible.Checked;
+
             doubleBufferPanelDrawing.Invalidate();
         }
 
@@ -207,7 +209,7 @@ namespace cv1
 
         private void radioButtonEdit_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioButtonEdit.Checked) 
+            if (radioButtonEdit.Checked)
                 mode = EnumEditorMode.Edit;
         }
 
@@ -221,6 +223,11 @@ namespace cv1
         {
             if (radioButtonInsertEdge.Checked)
                 mode = EnumEditorMode.InsertEdge;
+
+        }
+
+        private void trackBarBackgroundTransparency_Scroll(object sender, EventArgs e)
+        {
 
         }
     }

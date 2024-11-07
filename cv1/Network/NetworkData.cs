@@ -126,6 +126,10 @@ namespace cv1.Network
                     nodes.RemoveAt(i); 
                 }
             }
+
+            // remove edges that no longer have start or end nodes
+            var validNodes = new HashSet<NetworkNode>(nodes);
+            edges = edges.Where(edge => validNodes.Contains(edge.StartNode) && validNodes.Contains(edge.EndNode)).ToList();
         }
 
         public NetworkNode? IsNodeHitByMouse(Point parMousePosition)

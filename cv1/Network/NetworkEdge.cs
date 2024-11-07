@@ -22,7 +22,7 @@ namespace cv1.Network
             Point pStart = startNode.Position;
             Point pEnd = endNode.Position;
 
-            using Pen p = new(Color.DarkGray, 2.0f);
+            using Pen p = new(Color.Black, 2.0f);
 
             if (Selected)
                 p.Color = Color.Blue; 
@@ -36,8 +36,8 @@ namespace cv1.Network
             posX = posX >= 0 ? posX + pStart.X : pEnd.X - posX;
             posY = posY >= 0 ? posY + pStart.Y : pEnd.Y - posY;
 
-            using Font f = new(FontFamily.GenericSansSerif, 9);
-            g.DrawString(id.ToString(), f, Brushes.Red, new PointF(posX, posY));
+            using Font f = new(FontFamily.GenericSansSerif, 6);
+            g.DrawString(id.ToString(), f, Brushes.Black, new PointF(posX, posY));
         }
 
         public bool IsHitByMouse(Point mousePosition)
