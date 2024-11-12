@@ -178,7 +178,7 @@ namespace cv1.Network
             foreach (NetworkNode node in nodes)
             {
                 if (node.Selected)
-                    node.Position = new(node.Position.X + NodeDrawingOffset.X, node.Position.Y + NodeDrawingOffset.Y);
+                    node.Position = NodeDrawingOffset;
             }
         }
 

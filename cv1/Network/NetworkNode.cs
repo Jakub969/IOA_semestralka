@@ -10,8 +10,24 @@ namespace cv1.Network
         private int id = parID;
         [DataMember()]
         private Size size = new (10, 10);
+        [DataMember()]
+        private Point position = parPosition;
+
         public bool Selected { get; set; }
-        public Point Position { get; set; } = parPosition;
+
+        public Point Position
+        { 
+            get
+            {
+                return new(position.X + PositionOffset.X, position.Y + PositionOffset.Y);
+            }
+
+            set
+            {
+                position = new(position.X + value.X, position.Y + value.Y);
+            } 
+        }
+
         public Point PositionOffset { get; set; }
 
         public int ID { get { return id; } }
@@ -20,7 +36,7 @@ namespace cv1.Network
         {
             get
             {
-                return new(new(Position.X + PositionOffset.X - size.Width / 2, Position.Y + PositionOffset.Y - size.Height / 2), size);
+                return new(new(Position.X - size.Width / 2, Position.Y - size.Height / 2), size);
             }
         }
 
