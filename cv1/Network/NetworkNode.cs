@@ -47,7 +47,7 @@ namespace cv1.Network
             g.FillEllipse(Brushes.Orange, boundRect);
             g.DrawEllipse(Pens.Red, boundRect);
 
-            using Font f = new(FontFamily.GenericMonospace, 5);
+            using Font f = new("Arial", 6, FontStyle.Bold, GraphicsUnit.Point);
 
             StringFormat stringFormat = new()
             {
