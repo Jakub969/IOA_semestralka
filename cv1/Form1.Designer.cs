@@ -145,9 +145,9 @@
             // doubleBufferPanelDrawing
             // 
             doubleBufferPanelDrawing.Dock = DockStyle.Fill;
-            doubleBufferPanelDrawing.Location = new Point(0, 0);
+            doubleBufferPanelDrawing.Location = new Point(179, 24);
             doubleBufferPanelDrawing.Name = "doubleBufferPanelDrawing";
-            doubleBufferPanelDrawing.Size = new Size(1342, 798);
+            doubleBufferPanelDrawing.Size = new Size(1099, 774);
             doubleBufferPanelDrawing.TabIndex = 1;
             doubleBufferPanelDrawing.Paint += doubleBufferPanelDrawing_Paint;
             doubleBufferPanelDrawing.MouseDown += doubleBufferPanelDrawing_MouseDown;
@@ -159,7 +159,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(1342, 24);
+            menuStrip1.Size = new Size(1278, 24);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -206,10 +206,10 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1342, 798);
+            ClientSize = new Size(1278, 798);
+            Controls.Add(doubleBufferPanelDrawing);
             Controls.Add(panelTools);
             Controls.Add(menuStrip1);
-            Controls.Add(doubleBufferPanelDrawing);
             KeyPreview = true;
             MainMenuStrip = menuStrip1;
             Name = "Form1";

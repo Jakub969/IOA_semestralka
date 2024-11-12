@@ -21,6 +21,7 @@ namespace cv1.Network
         private Bitmap? bitmapOriginalMap;
         [DataMember()]
 
+        public Point NodeDrawingOffset { get; set; }
         public int BackgroundAlpha { get; set; }
         public bool BackgroundVisible { get; set; }
         public List<NetworkNode> Nodes { get { return nodes; } }
@@ -73,6 +74,9 @@ namespace cv1.Network
 
             foreach (NetworkNode node in nodes)
             {
+                if (node.Selected)
+                    node.PositionOffset = NodeDrawingOffset;
+
                 node.Draw(g);
             }
         }
@@ -81,6 +85,7 @@ namespace cv1.Network
         {
             nodes.Add(new(parPosition, nodeID++));
         }
+
         public bool InsertEdge(NetworkNode parStartNode, NetworkNode parEndNode)
         {
             if (parStartNode == parEndNode)
@@ -159,6 +164,22 @@ namespace cv1.Network
             }
 
             return null;
+        }
+
+        public bool HoverOverSelectedNode(Point parMousePosition)
+        {
+            NetworkNode? nodeMouseOver = IsNodeHitByMouse(parMousePosition);
+
+            return (nodeMouseOver != null && nodeMouseOver.Selected);
+        }
+
+        public void UpdateNodesPositionsAfterDrag()
+        {
+            foreach (NetworkNode node in nodes)
+            {
+                if (node.Selected)
+                    node.Position = new(node.Position.X + NodeDrawingOffset.X, node.Position.Y + NodeDrawingOffset.Y);
+            }
         }
 
         public bool IsHitByMouse(Point mousePosition)

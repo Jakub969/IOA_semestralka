@@ -13,6 +13,7 @@ namespace cv1.Enums
         InsertEdge, 
         SelectBegin, 
         Selecting, 
-        NodeDraggings
+        PossibleDrag,
+        NodeDragging
     }
 }

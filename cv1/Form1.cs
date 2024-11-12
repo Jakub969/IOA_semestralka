@@ -2,8 +2,6 @@ using cv1.Enums;
 using cv1.Network;
 using cv1.Tools;
 using Microsoft.VisualBasic.Devices;
-using System.Drawing;
-using static System.ComponentModel.Design.ObjectSelectorEditor;
 
 namespace cv1
 {
@@ -12,6 +10,7 @@ namespace cv1
         private EnumEditorState state = EnumEditorState.None;
         private EnumEditorMode mode = EnumEditorMode.Edit;
 
+        private Point startMousePos;
         private Point currentMousePos;
         private NetworkData network;
         private bool framedSelectionBox = true;
@@ -67,17 +66,25 @@ namespace cv1
             {
                 if (mode == EnumEditorMode.Edit)
                 {
-                    bool ctrlPressed = (network.Key == Keys.ControlKey);
-
-                    if (!network.SelectNode(e.Location, ctrlPressed))
+                    if (state == EnumEditorState.PossibleDrag)
                     {
-                        network.SelectNode(new Rectangle(), ctrlPressed);
-                        state = EnumEditorState.SelectBegin;
+                        state = EnumEditorState.NodeDragging;
+                        startMousePos = e.Location;
+                    }
+                    else
+                    {
+                        bool ctrlPressed = (network.Key == Keys.ControlKey);
 
-                        if (framedSelectionBox)
-                            SelectionBoxFramed.InitSelectionBox(e.Location);
-                        else
-                            SelectionBox.InitSelectionBox(e.Location);
+                        if (!network.SelectNode(e.Location, ctrlPressed))
+                        {
+                            network.SelectNode(new Rectangle(), ctrlPressed);
+                            state = EnumEditorState.SelectBegin;
+
+                            if (framedSelectionBox)
+                                SelectionBoxFramed.InitSelectionBox(e.Location);
+                            else
+                                SelectionBox.InitSelectionBox(e.Location);
+                        }
                     }
                 }
                 else if (mode == EnumEditorMode.InsertNode)
@@ -105,7 +112,11 @@ namespace cv1
             {
                 if (mode == EnumEditorMode.Edit)
                 {
-                    if (state == EnumEditorState.Selecting || state == EnumEditorState.SelectBegin)
+                    if (state == EnumEditorState.NodeDragging)
+                    {
+                        network.NodeDrawingOffset = new (e.Location.X - startMousePos.X, e.Location.Y - startMousePos.Y);
+                    }
+                    else if (state == EnumEditorState.Selecting || state == EnumEditorState.SelectBegin)
                     {
                         state = EnumEditorState.Selecting;
 
@@ -128,6 +139,23 @@ namespace cv1
                     currentMousePos = e.Location;
                 }
             }
+            else if (e.Button == MouseButtons.Right)
+            {
+
+            }
+            else if (e.Button == MouseButtons.None)
+            {
+                if (network.HoverOverSelectedNode(e.Location))
+                {
+                    state = EnumEditorState.PossibleDrag;
+                    Cursor = Cursors.Hand;
+                }
+                else
+                {
+                    state = EnumEditorState.None;
+                    Cursor = Cursors.Default;
+                }
+            }
 
             doubleBufferPanelDrawing.Invalidate();
         }
@@ -136,7 +164,11 @@ namespace cv1
         {
             if (mode == EnumEditorMode.Edit)
             {
-                if (state == EnumEditorState.Selecting)
+                if (state == EnumEditorState.NodeDragging)
+                {
+                    network.UpdateNodesPositionsAfterDrag();
+                }
+                else if (state == EnumEditorState.Selecting)
                 {
                     bool ctrlPressed = (network.Key == Keys.ControlKey);
 
@@ -165,15 +197,19 @@ namespace cv1
             SelectionBox.IsActive = false;
             edgeNodeStart = null;
             currentMousePos = new(0, 0);
+            network.NodeDrawingOffset = new(0, 0);
 
             doubleBufferPanelDrawing.Invalidate();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            string path = @"C:\\Users\\lekyr1\\Desktop\\data\\MapaPodklad.png";
+            string path = @"C:\\Users\\Michal Lekýr\\Desktop\\MapaPodklad.png";
 
-            network = new(path);
+            network = new(path)
+            {
+                BackgroundAlpha = trackBarBackgroundTransparency.Value
+            };
 
             doubleBufferPanelDrawing.Invalidate();
         }
@@ -239,15 +275,18 @@ namespace cv1
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.InitialDirectory = @"Documents";
-            openFileDialog.RestoreDirectory = true;
-            openFileDialog.Title = "Browse XML Files";
-            openFileDialog.DefaultExt = "xml";
-            openFileDialog.Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*";
-            openFileDialog.FilterIndex = 2;
-            openFileDialog.CheckFileExists = true;
-            openFileDialog.CheckPathExists = true;
+            OpenFileDialog openFileDialog = new()
+            {
+                InitialDirectory = @"Documents",
+                RestoreDirectory = true,
+                Title = "Browse XML Files",
+                DefaultExt = "xml",
+                Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*",
+                FilterIndex = 2,
+                CheckFileExists = true,
+                CheckPathExists = true
+            };
+
             openFileDialog.ShowDialog();
         }
     }
