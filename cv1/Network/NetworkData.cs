@@ -67,6 +67,12 @@ namespace cv1.Network
                 g.FillRectangle(semiTransBrush, 0, 0, bitmapSize.Width, bitmapSize.Height);
             }
 
+            foreach (NetworkNode node in nodes)
+            {
+                if (node.Selected)
+                    node.PositionOffset = NodeDrawingOffset;
+            }
+
             foreach (NetworkEdge edge in edges)
             {
                 edge.Draw(g);
@@ -74,9 +80,6 @@ namespace cv1.Network
 
             foreach (NetworkNode node in nodes)
             {
-                if (node.Selected)
-                    node.PositionOffset = NodeDrawingOffset;
-
                 node.Draw(g);
             }
         }

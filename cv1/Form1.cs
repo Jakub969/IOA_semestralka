@@ -197,6 +197,7 @@ namespace cv1
             SelectionBox.IsActive = false;
             edgeNodeStart = null;
             currentMousePos = new(0, 0);
+            startMousePos = new(0, 0);  
             network.NodeDrawingOffset = new(0, 0);
 
             doubleBufferPanelDrawing.Invalidate();
@@ -245,18 +246,30 @@ namespace cv1
 
         private void radioButtonEdit_CheckedChanged(object sender, EventArgs e)
         {
+            // deselect all nodes
+            network.SelectNode(new Rectangle());
+            doubleBufferPanelDrawing.Invalidate();
+
             if (radioButtonEdit.Checked)
                 mode = EnumEditorMode.Edit;
         }
 
         private void radioButtonInsertNode_CheckedChanged(object sender, EventArgs e)
         {
+            // deselect all nodes
+            network.SelectNode(new Rectangle());
+            doubleBufferPanelDrawing.Invalidate();
+
             if (radioButtonInsertNode.Checked)
                 mode = EnumEditorMode.InsertNode;
         }
 
         private void radioButtonInsertEdge_CheckedChanged(object sender, EventArgs e)
         {
+            // deselect all nodes
+            network.SelectNode(new Rectangle());
+            doubleBufferPanelDrawing.Invalidate();
+
             if (radioButtonInsertEdge.Checked)
                 mode = EnumEditorMode.InsertEdge;
 
