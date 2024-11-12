@@ -9,7 +9,7 @@ namespace cv1.Network
         [DataMember()]
         private int id = parID;
         [DataMember()]
-        private Size size = new (10, 10);
+        private Size size = new (12, 12);
         [DataMember()]
         private Point position = parPosition;
 
@@ -47,8 +47,15 @@ namespace cv1.Network
             g.FillEllipse(Brushes.Orange, boundRect);
             g.DrawEllipse(Pens.Red, boundRect);
 
-            using Font f = new(FontFamily.GenericSansSerif, 7);
-            g.DrawString(id.ToString(), f, Brushes.Red, new PointF(BoundingRectangle.X + size.Width, BoundingRectangle.Y + size.Height));
+            using Font f = new(FontFamily.GenericMonospace, 5);
+
+            StringFormat stringFormat = new()
+            {
+                Alignment = StringAlignment.Center,
+                LineAlignment = StringAlignment.Center
+            };
+
+            g.DrawString(id.ToString(), f, Brushes.Red, boundRect, stringFormat);
 
             if (Selected)
             {
