@@ -15,14 +15,30 @@ namespace cv1.Network
         [DataMember()]
         private List<NetworkEdge> edges = [];
         [DataMember()]
-        private string? bitmapPath;
+        private string bitmapPath = string.Empty;
         [DataMember()]
         private bool backgrounVisible;
 
-        private Bitmap? bitmapOriginalMap;
+        private Bitmap? bitmapImage;
 
         public Point NodeDrawingOffset { get; set; }
         public int BackgroundAlpha { get; set; }
+
+        public Bitmap? BitmapImage { get { return bitmapImage; } }
+
+        public string BitmapPath
+        {
+            get
+            {
+                return bitmapPath;
+            }
+            set
+            {
+                bitmapPath = value;
+                LoadBackgroundImage();
+            }
+        }
+
         public bool BackgroundVisible 
         { 
             get 
@@ -47,32 +63,34 @@ namespace cv1.Network
             }
         }
 
-        public NetworkData(string parBitmapPath)
+        public NetworkData()
         {
             BackgroundVisible = true;  
             Key = Keys.None;    
-            bitmapPath = parBitmapPath;
+        }
 
+        public void LoadBackgroundImage()
+        {
             if (string.IsNullOrEmpty(bitmapPath))
                 return;
 
             try
             {
-                bitmapOriginalMap = new(bitmapPath);
+                bitmapImage = new(bitmapPath);
             }
             catch (Exception e)
             {
                 MessageBox.Show("Error loading bitmap" + e.Message);
-                return; 
+                return;
             }
         }
 
         public void Draw(Graphics g)
         {
-            if (BackgroundVisible && bitmapOriginalMap != null)
+            if (BackgroundVisible && bitmapImage != null)
             {
-                g.DrawImage(bitmapOriginalMap, 0, 0);
-                Size bitmapSize = bitmapOriginalMap.Size;
+                g.DrawImage(bitmapImage, 0, 0);
+                Size bitmapSize = bitmapImage.Size;
 
                 using SolidBrush semiTransBrush = new (Color.FromArgb(255-BackgroundAlpha, 255, 255, 255));
                 g.FillRectangle(semiTransBrush, 0, 0, bitmapSize.Width, bitmapSize.Height);

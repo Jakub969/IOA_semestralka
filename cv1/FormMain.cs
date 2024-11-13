@@ -1,14 +1,12 @@
 using cv1.Enums;
 using cv1.Network;
 using cv1.Tools;
-using Microsoft.VisualBasic.Devices;
 using System.Runtime.Serialization;
-using System.Windows.Forms;
 using System.Xml;
 
 namespace cv1
 {
-    public partial class Form1 : Form
+    public partial class FormMain : Form
     {
         private EnumEditorState state = EnumEditorState.None;
         private EnumEditorMode mode = EnumEditorMode.Edit;
@@ -18,9 +16,9 @@ namespace cv1
         private NetworkData network;
         private bool framedSelectionBox = true;
         private NetworkNode? edgeNodeStart = null;
-        private string projectPath; 
+        private string projectPath = string.Empty;
 
-        public Form1()
+        public FormMain()
         {
             InitializeComponent();
         }
@@ -208,12 +206,29 @@ namespace cv1
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            string path = @"C:\\Users\\lekyr1\\Desktop\\data\\MapaPodklad.png";
-
-            network = new(path)
+            network = new()
             {
                 BackgroundAlpha = trackBarBackgroundTransparency.Value
             };
+
+            panelBackground.Enabled = false;
+            doubleBufferPanelDrawing.Invalidate();
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (network != null)
+            {
+                if (MessageBox.Show("Network loaded, do you wan to reset?", "Network editor", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.No)
+                    return;
+            }
+
+            network = new()
+            {
+                BackgroundAlpha = trackBarBackgroundTransparency.Value
+            };
+
+            panelBackground.Enabled = false;
 
             doubleBufferPanelDrawing.Invalidate();
         }
@@ -222,8 +237,6 @@ namespace cv1
         {
             if (network != null)
                 network.BackgroundVisible = checkBoxBackgroundVisible.Checked;
-
-            trackBarBackgroundTransparency.Enabled = checkBoxBackgroundVisible.Checked;
 
             doubleBufferPanelDrawing.Invalidate();
         }
@@ -338,12 +351,12 @@ namespace cv1
             if (serializer.ReadObject(reader, true) is not NetworkData data)
                 return;
 
-            string path = @"C:\\Users\\lekyr1\\Desktop\\data\\MapaPodklad.png";
-
-            network = new(path)
+            network = new()
             {
                 BackgroundAlpha = trackBarBackgroundTransparency.Value
             };
+
+            network.BitmapPath = data.BitmapPath;
 
             foreach (var node in data.Nodes)
             {
@@ -384,15 +397,39 @@ namespace cv1
             };
 
             openFileDialog.ShowDialog();
-
             projectPath = openFileDialog.FileName;
-
-            LoadNetworkData(); 
+            LoadNetworkData();
         }
 
         private void buttonShortestPath_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void loadBackgroundToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new()
+            {
+                InitialDirectory = @"Desktop",
+                RestoreDirectory = true,
+                Title = "Browse PNG Files",
+                DefaultExt = "png",
+                Filter = "png files (*.png)|*.png|All files (*.*)|*.*",
+                FilterIndex = 2,
+                CheckFileExists = true,
+                CheckPathExists = true
+            };
+
+            openFileDialog.ShowDialog();
+
+            network.BitmapPath = openFileDialog.FileName;
+
+            if (network.BitmapImage != null)
+            {
+                panelBackground.Enabled = true;
+                labelBackgroundName.Text = Path.GetFileName(openFileDialog.FileName);
+                labelMapSize.Text = "Map size: " + network.BitmapImage.Width + " x " + network.BitmapImage.Height;
+            }
         }
     }
 }
