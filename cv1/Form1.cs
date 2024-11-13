@@ -114,7 +114,7 @@ namespace cv1
                 {
                     if (state == EnumEditorState.NodeDragging)
                     {
-                        network.NodeDrawingOffset = new (e.Location.X - startMousePos.X, e.Location.Y - startMousePos.Y);
+                        network.NodeDrawingOffset = new(e.Location.X - startMousePos.X, e.Location.Y - startMousePos.Y);
                     }
                     else if (state == EnumEditorState.Selecting || state == EnumEditorState.SelectBegin)
                     {
@@ -197,7 +197,7 @@ namespace cv1
             SelectionBox.IsActive = false;
             edgeNodeStart = null;
             currentMousePos = new(0, 0);
-            startMousePos = new(0, 0);  
+            startMousePos = new(0, 0);
             network.NodeDrawingOffset = new(0, 0);
 
             doubleBufferPanelDrawing.Invalidate();
@@ -205,7 +205,7 @@ namespace cv1
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            string path = @"C:\\Users\\Michal Lekýr\\Desktop\\MapaPodklad.png";
+            string path = @"C:\\Users\\lekyr1\\Desktop\\data\\MapaPodklad.png";
 
             network = new(path)
             {
@@ -301,6 +301,11 @@ namespace cv1
             };
 
             openFileDialog.ShowDialog();
+        }
+
+        private void buttonShortestPath_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -44,15 +44,27 @@
             closeToolStripMenuItem = new ToolStripMenuItem();
             saveAsToolStripMenuItem = new ToolStripMenuItem();
             exitToolStripMenuItem = new ToolStripMenuItem();
+            numericUpDown1 = new NumericUpDown();
+            numericUpDown2 = new NumericUpDown();
+            label2 = new Label();
+            label3 = new Label();
+            buttonShortestPath = new Button();
             panelTools.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)trackBarBackgroundTransparency).BeginInit();
             groupBoxState.SuspendLayout();
             menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown2).BeginInit();
             SuspendLayout();
             // 
             // panelTools
             // 
             panelTools.BackColor = SystemColors.AppWorkspace;
+            panelTools.Controls.Add(buttonShortestPath);
+            panelTools.Controls.Add(label3);
+            panelTools.Controls.Add(label2);
+            panelTools.Controls.Add(numericUpDown2);
+            panelTools.Controls.Add(numericUpDown1);
             panelTools.Controls.Add(label1);
             panelTools.Controls.Add(trackBarBackgroundTransparency);
             panelTools.Controls.Add(groupBoxState);
@@ -87,7 +99,7 @@
             groupBoxState.Controls.Add(radioButtonInsertEdge);
             groupBoxState.Controls.Add(radioButtonInsertNode);
             groupBoxState.Controls.Add(radioButtonEdit);
-            groupBoxState.Location = new Point(12, 119);
+            groupBoxState.Location = new Point(9, 99);
             groupBoxState.Name = "groupBoxState";
             groupBoxState.Size = new Size(161, 103);
             groupBoxState.TabIndex = 2;
@@ -202,6 +214,48 @@
             exitToolStripMenuItem.Text = "Exit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
+            // numericUpDown1
+            // 
+            numericUpDown1.Location = new Point(9, 234);
+            numericUpDown1.Name = "numericUpDown1";
+            numericUpDown1.Size = new Size(161, 23);
+            numericUpDown1.TabIndex = 5;
+            // 
+            // numericUpDown2
+            // 
+            numericUpDown2.Location = new Point(9, 283);
+            numericUpDown2.Name = "numericUpDown2";
+            numericUpDown2.Size = new Size(161, 23);
+            numericUpDown2.TabIndex = 6;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(12, 216);
+            label2.Name = "label2";
+            label2.Size = new Size(61, 15);
+            label2.TabIndex = 7;
+            label2.Text = "Start node";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(12, 265);
+            label3.Name = "label3";
+            label3.Size = new Size(57, 15);
+            label3.TabIndex = 8;
+            label3.Text = "End node";
+            // 
+            // buttonShortestPath
+            // 
+            buttonShortestPath.Location = new Point(9, 321);
+            buttonShortestPath.Name = "buttonShortestPath";
+            buttonShortestPath.Size = new Size(161, 23);
+            buttonShortestPath.TabIndex = 9;
+            buttonShortestPath.Text = "Find shortest path";
+            buttonShortestPath.UseVisualStyleBackColor = true;
+            buttonShortestPath.Click += buttonShortestPath_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -225,6 +279,8 @@
             groupBoxState.PerformLayout();
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown2).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -247,5 +303,10 @@
         private ToolStripMenuItem closeToolStripMenuItem;
         private ToolStripMenuItem saveAsToolStripMenuItem;
         private ToolStripMenuItem exitToolStripMenuItem;
+        private Button buttonShortestPath;
+        private Label label3;
+        private Label label2;
+        private NumericUpDown numericUpDown2;
+        private NumericUpDown numericUpDown1;
     }
 }
