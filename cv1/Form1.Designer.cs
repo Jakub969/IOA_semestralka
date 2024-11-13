@@ -49,6 +49,8 @@
             label2 = new Label();
             label3 = new Label();
             buttonShortestPath = new Button();
+            textBoxShortestPath = new TextBox();
+            label4 = new Label();
             panelTools.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)trackBarBackgroundTransparency).BeginInit();
             groupBoxState.SuspendLayout();
@@ -60,6 +62,8 @@
             // panelTools
             // 
             panelTools.BackColor = SystemColors.AppWorkspace;
+            panelTools.Controls.Add(label4);
+            panelTools.Controls.Add(textBoxShortestPath);
             panelTools.Controls.Add(buttonShortestPath);
             panelTools.Controls.Add(label3);
             panelTools.Controls.Add(label2);
@@ -256,6 +260,22 @@
             buttonShortestPath.UseVisualStyleBackColor = true;
             buttonShortestPath.Click += buttonShortestPath_Click;
             // 
+            // textBoxShortestPath
+            // 
+            textBoxShortestPath.Location = new Point(9, 375);
+            textBoxShortestPath.Name = "textBoxShortestPath";
+            textBoxShortestPath.Size = new Size(161, 23);
+            textBoxShortestPath.TabIndex = 10;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(11, 355);
+            label4.Name = "label4";
+            label4.Size = new Size(107, 15);
+            label4.TabIndex = 11;
+            label4.Text = "Total distance (km)";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -308,5 +328,7 @@
         private Label label2;
         private NumericUpDown numericUpDown2;
         private NumericUpDown numericUpDown1;
+        private TextBox textBoxShortestPath;
+        private Label label4;
     }
 }
