@@ -10,15 +10,22 @@ namespace cv1.Network
         [DataMember()]
         private int id = parID;
         [DataMember()]
-        private NetworkNode startNode = parStartNode;
+        private int startNodeID = parStartNode.ID;
         [DataMember()]
+        private int endNodeID = parEndNode.ID;
+
+        private NetworkNode startNode = parStartNode;
         private NetworkNode endNode = parEndNode;
 
         public NetworkNode StartNode { get => startNode; }
         public NetworkNode EndNode { get => endNode; }
 
-        public bool Selected { get; set; }
+        public int ID { get { return id; } }
 
+        public int StartNodeID { get { return startNodeID; } }
+        public int EndNodeID { get { return endNodeID; } }
+
+        public bool Selected { get; set; }
 
         public void Draw(Graphics g)
         {

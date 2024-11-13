@@ -2,6 +2,9 @@ using cv1.Enums;
 using cv1.Network;
 using cv1.Tools;
 using Microsoft.VisualBasic.Devices;
+using System.Runtime.Serialization;
+using System.Windows.Forms;
+using System.Xml;
 
 namespace cv1
 {
@@ -14,8 +17,8 @@ namespace cv1
         private Point currentMousePos;
         private NetworkData network;
         private bool framedSelectionBox = true;
-
         private NetworkNode? edgeNodeStart = null;
+        private string projectPath; 
 
         public Form1()
         {
@@ -286,7 +289,87 @@ namespace cv1
             Application.Exit();
         }
 
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveNetworkData();
+        }
+
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new();
+            saveFileDialog.InitialDirectory = @"Documents";
+            saveFileDialog.RestoreDirectory = true;
+            saveFileDialog.Title = "Browse XML Files";
+            saveFileDialog.DefaultExt = "xml";
+            saveFileDialog.Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*";
+            saveFileDialog.FilterIndex = 2;
+            saveFileDialog.ShowDialog();
+
+            projectPath = saveFileDialog.FileName;
+            SaveNetworkData();
+        }
+
+        private void SaveNetworkData()
+        {
+            if (string.IsNullOrWhiteSpace(projectPath))
+                return;
+
+            // Creates an instance of the XmlSerializer class;
+            // specifies the type of object to serialize.
+            var serializer = new DataContractSerializer(network.GetType());
+            FileStream writer = new(projectPath, FileMode.Create);
+
+            serializer.WriteObject(writer, network);
+            writer.Close();
+        }
+
+        private void LoadNetworkData()
+        {
+            if (string.IsNullOrWhiteSpace(projectPath))
+                return;
+
+            FileStream fs = new(projectPath, FileMode.Open);
+            XmlDictionaryReader reader = XmlDictionaryReader.CreateTextReader(fs, new XmlDictionaryReaderQuotas());
+            DataContractSerializer? serializer = new(typeof(NetworkData));
+
+            if (serializer == null)
+                return;
+
+            if (serializer.ReadObject(reader, true) is not NetworkData data)
+                return;
+
+            string path = @"C:\\Users\\lekyr1\\Desktop\\data\\MapaPodklad.png";
+
+            network = new(path)
+            {
+                BackgroundAlpha = trackBarBackgroundTransparency.Value
+            };
+
+            foreach (var node in data.Nodes)
+            {
+                network.Nodes.Add(node);
+            }
+
+            foreach (var edge in data.Edges)
+            {
+                NetworkNode? startNode = network.Nodes.Find(n => n.ID == edge.StartNodeID);
+                NetworkNode? endNode = network.Nodes.Find(n => n.ID == edge.EndNodeID);
+
+                if (startNode == null || endNode == null)
+                    continue;
+
+                network.Edges.Add(new NetworkEdge(startNode, endNode, edge.ID));
+            }
+
+            network.BackgroundVisible = data.BackgroundVisible;
+
+            reader.Close();
+            fs.Close();
+
+            doubleBufferPanelDrawing.Invalidate();
+        }
+
+        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new()
             {
@@ -301,6 +384,10 @@ namespace cv1
             };
 
             openFileDialog.ShowDialog();
+
+            projectPath = openFileDialog.FileName;
+
+            LoadNetworkData(); 
         }
 
         private void buttonShortestPath_Click(object sender, EventArgs e)

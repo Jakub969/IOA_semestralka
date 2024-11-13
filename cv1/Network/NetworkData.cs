@@ -10,21 +10,32 @@ namespace cv1.Network
         private int nodeID = 0;
         [DataMember()]
         private int edgeID = 0;
-
         [DataMember()]
         private List<NetworkNode> nodes = [];
         [DataMember()]
         private List<NetworkEdge> edges = [];
         [DataMember()]
         private string? bitmapPath;
+        [DataMember()]
+        private bool backgrounVisible;
 
         private Bitmap? bitmapOriginalMap;
-        [DataMember()]
 
         public Point NodeDrawingOffset { get; set; }
         public int BackgroundAlpha { get; set; }
-        public bool BackgroundVisible { get; set; }
+        public bool BackgroundVisible 
+        { 
+            get 
+            { 
+                return backgrounVisible; 
+            } 
+            set 
+            { 
+                backgrounVisible = value;
+            } 
+        }
         public List<NetworkNode> Nodes { get { return nodes; } }
+        public List<NetworkEdge> Edges { get { return edges; } }
 
         public Keys Key { get; set; }
 

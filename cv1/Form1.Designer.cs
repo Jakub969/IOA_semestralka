@@ -29,6 +29,13 @@
         private void InitializeComponent()
         {
             panelTools = new Panel();
+            label4 = new Label();
+            textBoxShortestPath = new TextBox();
+            buttonShortestPath = new Button();
+            label3 = new Label();
+            label2 = new Label();
+            numericUpDown2 = new NumericUpDown();
+            numericUpDown1 = new NumericUpDown();
             label1 = new Label();
             trackBarBackgroundTransparency = new TrackBar();
             groupBoxState = new GroupBox();
@@ -40,23 +47,17 @@
             menuStrip1 = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
             newToolStripMenuItem = new ToolStripMenuItem();
-            openToolStripMenuItem = new ToolStripMenuItem();
             closeToolStripMenuItem = new ToolStripMenuItem();
+            openToolStripMenuItem = new ToolStripMenuItem();
+            saveToolStripMenuItem = new ToolStripMenuItem();
             saveAsToolStripMenuItem = new ToolStripMenuItem();
             exitToolStripMenuItem = new ToolStripMenuItem();
-            numericUpDown1 = new NumericUpDown();
-            numericUpDown2 = new NumericUpDown();
-            label2 = new Label();
-            label3 = new Label();
-            buttonShortestPath = new Button();
-            textBoxShortestPath = new TextBox();
-            label4 = new Label();
             panelTools.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trackBarBackgroundTransparency).BeginInit();
             groupBoxState.SuspendLayout();
             menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown2).BeginInit();
             SuspendLayout();
             // 
             // panelTools
@@ -78,6 +79,64 @@
             panelTools.Name = "panelTools";
             panelTools.Size = new Size(179, 774);
             panelTools.TabIndex = 0;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(11, 355);
+            label4.Name = "label4";
+            label4.Size = new Size(107, 15);
+            label4.TabIndex = 11;
+            label4.Text = "Total distance (km)";
+            // 
+            // textBoxShortestPath
+            // 
+            textBoxShortestPath.Location = new Point(9, 375);
+            textBoxShortestPath.Name = "textBoxShortestPath";
+            textBoxShortestPath.Size = new Size(161, 23);
+            textBoxShortestPath.TabIndex = 10;
+            // 
+            // buttonShortestPath
+            // 
+            buttonShortestPath.Location = new Point(9, 321);
+            buttonShortestPath.Name = "buttonShortestPath";
+            buttonShortestPath.Size = new Size(161, 23);
+            buttonShortestPath.TabIndex = 9;
+            buttonShortestPath.Text = "Find shortest path";
+            buttonShortestPath.UseVisualStyleBackColor = true;
+            buttonShortestPath.Click += buttonShortestPath_Click;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(12, 265);
+            label3.Name = "label3";
+            label3.Size = new Size(57, 15);
+            label3.TabIndex = 8;
+            label3.Text = "End node";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(12, 216);
+            label2.Name = "label2";
+            label2.Size = new Size(61, 15);
+            label2.TabIndex = 7;
+            label2.Text = "Start node";
+            // 
+            // numericUpDown2
+            // 
+            numericUpDown2.Location = new Point(9, 283);
+            numericUpDown2.Name = "numericUpDown2";
+            numericUpDown2.Size = new Size(161, 23);
+            numericUpDown2.TabIndex = 6;
+            // 
+            // numericUpDown1
+            // 
+            numericUpDown1.Location = new Point(9, 234);
+            numericUpDown1.Name = "numericUpDown1";
+            numericUpDown1.Size = new Size(161, 23);
+            numericUpDown1.TabIndex = 5;
             // 
             // label1
             // 
@@ -181,7 +240,7 @@
             // 
             // fileToolStripMenuItem
             // 
-            fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { newToolStripMenuItem, openToolStripMenuItem, closeToolStripMenuItem, saveAsToolStripMenuItem, exitToolStripMenuItem });
+            fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { newToolStripMenuItem, closeToolStripMenuItem, openToolStripMenuItem, saveToolStripMenuItem, saveAsToolStripMenuItem, exitToolStripMenuItem });
             fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             fileToolStripMenuItem.Size = new Size(37, 20);
             fileToolStripMenuItem.Text = "File";
@@ -189,92 +248,42 @@
             // newToolStripMenuItem
             // 
             newToolStripMenuItem.Name = "newToolStripMenuItem";
-            newToolStripMenuItem.Size = new Size(112, 22);
+            newToolStripMenuItem.Size = new Size(180, 22);
             newToolStripMenuItem.Text = "New";
-            // 
-            // openToolStripMenuItem
-            // 
-            openToolStripMenuItem.Name = "openToolStripMenuItem";
-            openToolStripMenuItem.Size = new Size(112, 22);
-            openToolStripMenuItem.Text = "Open";
             // 
             // closeToolStripMenuItem
             // 
             closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            closeToolStripMenuItem.Size = new Size(112, 22);
+            closeToolStripMenuItem.Size = new Size(180, 22);
             closeToolStripMenuItem.Text = "Close";
+            // 
+            // openToolStripMenuItem
+            // 
+            openToolStripMenuItem.Name = "openToolStripMenuItem";
+            openToolStripMenuItem.Size = new Size(180, 22);
+            openToolStripMenuItem.Text = "Load";
+            openToolStripMenuItem.Click += loadToolStripMenuItem_Click;
+            // 
+            // saveToolStripMenuItem
+            // 
+            saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            saveToolStripMenuItem.Size = new Size(180, 22);
+            saveToolStripMenuItem.Text = "Save";
+            saveToolStripMenuItem.Click += saveToolStripMenuItem_Click;
             // 
             // saveAsToolStripMenuItem
             // 
             saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            saveAsToolStripMenuItem.Size = new Size(112, 22);
+            saveAsToolStripMenuItem.Size = new Size(180, 22);
             saveAsToolStripMenuItem.Text = "Save as";
             saveAsToolStripMenuItem.Click += saveAsToolStripMenuItem_Click;
             // 
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(112, 22);
+            exitToolStripMenuItem.Size = new Size(180, 22);
             exitToolStripMenuItem.Text = "Exit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
-            // 
-            // numericUpDown1
-            // 
-            numericUpDown1.Location = new Point(9, 234);
-            numericUpDown1.Name = "numericUpDown1";
-            numericUpDown1.Size = new Size(161, 23);
-            numericUpDown1.TabIndex = 5;
-            // 
-            // numericUpDown2
-            // 
-            numericUpDown2.Location = new Point(9, 283);
-            numericUpDown2.Name = "numericUpDown2";
-            numericUpDown2.Size = new Size(161, 23);
-            numericUpDown2.TabIndex = 6;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(12, 216);
-            label2.Name = "label2";
-            label2.Size = new Size(61, 15);
-            label2.TabIndex = 7;
-            label2.Text = "Start node";
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(12, 265);
-            label3.Name = "label3";
-            label3.Size = new Size(57, 15);
-            label3.TabIndex = 8;
-            label3.Text = "End node";
-            // 
-            // buttonShortestPath
-            // 
-            buttonShortestPath.Location = new Point(9, 321);
-            buttonShortestPath.Name = "buttonShortestPath";
-            buttonShortestPath.Size = new Size(161, 23);
-            buttonShortestPath.TabIndex = 9;
-            buttonShortestPath.Text = "Find shortest path";
-            buttonShortestPath.UseVisualStyleBackColor = true;
-            buttonShortestPath.Click += buttonShortestPath_Click;
-            // 
-            // textBoxShortestPath
-            // 
-            textBoxShortestPath.Location = new Point(9, 375);
-            textBoxShortestPath.Name = "textBoxShortestPath";
-            textBoxShortestPath.Size = new Size(161, 23);
-            textBoxShortestPath.TabIndex = 10;
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(11, 355);
-            label4.Name = "label4";
-            label4.Size = new Size(107, 15);
-            label4.TabIndex = 11;
-            label4.Text = "Total distance (km)";
             // 
             // Form1
             // 
@@ -294,13 +303,13 @@
             KeyUp += Form1_KeyUp;
             panelTools.ResumeLayout(false);
             panelTools.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
             ((System.ComponentModel.ISupportInitialize)trackBarBackgroundTransparency).EndInit();
             groupBoxState.ResumeLayout(false);
             groupBoxState.PerformLayout();
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown2).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -330,5 +339,6 @@
         private NumericUpDown numericUpDown1;
         private TextBox textBoxShortestPath;
         private Label label4;
+        private ToolStripMenuItem saveToolStripMenuItem;
     }
 }
