@@ -2,6 +2,7 @@ using cv1.Enums;
 using cv1.Network;
 using cv1.Tools;
 using System.Runtime.Serialization;
+using System.Windows.Forms;
 using System.Xml;
 
 namespace cv1
@@ -424,11 +425,26 @@ namespace cv1
 
             network.BitmapPath = openFileDialog.FileName;
 
+            InitUIBackgroundBitmap(network.BitmapPath);
+        }
+
+        private void InitUIBackgroundBitmap(string inFileName)
+        {
             if (network.BitmapImage != null)
             {
                 panelBackground.Enabled = true;
-                labelBackgroundName.Text = Path.GetFileName(openFileDialog.FileName);
+                labelBackgroundName.Text = Path.GetFileName(inFileName);
                 labelMapSize.Text = "Map size: " + network.BitmapImage.Width + " x " + network.BitmapImage.Height;
+                textBoxWidth.Text = network.BitmapImage.Width.ToString();
+                textBoxHeight.Text = network.BitmapImage.Height.ToString();
+            }
+            else
+            {
+                panelBackground.Enabled = false;
+                labelBackgroundName.Text = "not loaded";
+                labelMapSize.Text = "Map size:";
+                textBoxWidth.Text = string.Empty;
+                textBoxHeight.Text = string.Empty;
             }
         }
     }

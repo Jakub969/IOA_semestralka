@@ -31,9 +31,9 @@
             panelTools = new Panel();
             panelBackground = new Panel();
             label9 = new Label();
-            textBox2 = new TextBox();
+            textBoxHeight = new TextBox();
             label8 = new Label();
-            textBox1 = new TextBox();
+            textBoxWidth = new TextBox();
             label6 = new Label();
             labelMapSize = new Label();
             labelBackgroundName = new Label();
@@ -94,9 +94,9 @@
             // panelBackground
             // 
             panelBackground.Controls.Add(label9);
-            panelBackground.Controls.Add(textBox2);
+            panelBackground.Controls.Add(textBoxHeight);
             panelBackground.Controls.Add(label8);
-            panelBackground.Controls.Add(textBox1);
+            panelBackground.Controls.Add(textBoxWidth);
             panelBackground.Controls.Add(label6);
             panelBackground.Controls.Add(labelMapSize);
             panelBackground.Controls.Add(labelBackgroundName);
@@ -118,12 +118,13 @@
             label9.TabIndex = 30;
             label9.Text = "Height";
             // 
-            // textBox2
+            // textBoxHeight
             // 
-            textBox2.Location = new Point(67, 132);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(100, 23);
-            textBox2.TabIndex = 29;
+            textBoxHeight.Location = new Point(67, 132);
+            textBoxHeight.Name = "textBoxHeight";
+            textBoxHeight.Size = new Size(100, 23);
+            textBoxHeight.TabIndex = 29;
+            textBoxHeight.TextAlign = HorizontalAlignment.Right;
             // 
             // label8
             // 
@@ -134,12 +135,13 @@
             label8.TabIndex = 28;
             label8.Text = "Width";
             // 
-            // textBox1
+            // textBoxWidth
             // 
-            textBox1.Location = new Point(67, 102);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(100, 23);
-            textBox1.TabIndex = 27;
+            textBoxWidth.Location = new Point(67, 102);
+            textBoxWidth.Name = "textBoxWidth";
+            textBoxWidth.Size = new Size(100, 23);
+            textBoxWidth.TabIndex = 27;
+            textBoxWidth.TextAlign = HorizontalAlignment.Right;
             // 
             // label6
             // 
@@ -459,9 +461,9 @@
         private ToolStripSeparator toolStripMenuItem2;
         private Panel panelBackground;
         private Label label9;
-        private TextBox textBox2;
+        private TextBox textBoxHeight;
         private Label label8;
-        private TextBox textBox1;
+        private TextBox textBoxWidth;
         private Label label6;
         public Label labelBackgroundName;
         private Label label5;
