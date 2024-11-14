@@ -18,6 +18,10 @@ namespace cv1.Network
         private string bitmapPath = string.Empty;
         [DataMember()]
         private bool backgrounVisible;
+        [DataMember()]
+        private float mapWidth = 0.0f;
+        [DataMember()]
+        private float mapHeight = 0.0f;
 
         private Bitmap? bitmapImage;
 
@@ -25,6 +29,10 @@ namespace cv1.Network
         public int BackgroundAlpha { get; set; }
 
         public Bitmap? BitmapImage { get { return bitmapImage; } }
+        
+        public float MapWidth { get { return mapWidth; } set { mapWidth = value; } }
+        public float MapHeight { get { return mapHeight; } set { mapHeight = value; } }
+
 
         public string BitmapPath
         {

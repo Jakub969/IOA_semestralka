@@ -106,6 +106,7 @@ namespace cv1
             }
 
             doubleBufferPanelDrawing.Invalidate();
+            RefreshUserInterface(); 
         }
 
         private void doubleBufferPanelDrawing_MouseMove(object sender, MouseEventArgs e)
@@ -203,6 +204,7 @@ namespace cv1
             network.NodeDrawingOffset = new(0, 0);
 
             doubleBufferPanelDrawing.Invalidate();
+            RefreshUserInterface(); 
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -254,6 +256,8 @@ namespace cv1
                     doubleBufferPanelDrawing.Invalidate();
                 }
             }
+
+            RefreshUserInterface();
         }
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)
@@ -381,6 +385,7 @@ namespace cv1
             fs.Close();
 
             doubleBufferPanelDrawing.Invalidate();
+            RefreshUserInterface();
         }
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
@@ -425,18 +430,47 @@ namespace cv1
 
             network.BitmapPath = openFileDialog.FileName;
 
-            InitUIBackgroundBitmap(network.BitmapPath);
+            RefreshUserInterface();
         }
 
-        private void InitUIBackgroundBitmap(string inFileName)
+        private void RefreshUserInterface()
         {
+            if (network == null)
+                return;
+
+            if (network.Nodes.Count > 1)
+            {
+                panelShortestPath.Enabled = true;
+                labelStartNode.Text = "Start node <0," + (network.Nodes.Count - 1).ToString() + ">";
+                labelEndNode.Text = "End node <0," + (network.Nodes.Count - 1).ToString() + ">";
+                numericUpDownStartNode.Maximum = network.Nodes.Count - 1;
+                numericUpDownStartNode.Value = 0;
+
+                numericUpDownEndNode.Maximum = network.Nodes.Count - 1;
+                numericUpDownEndNode.Value = 0;
+            }
+            else
+            {
+                panelShortestPath.Enabled = false;
+                labelStartNode.Text = "Start node";
+                labelEndNode.Text = "End node";
+                numericUpDownStartNode.Value = 0;
+                numericUpDownEndNode.Value = 0;
+            }
+
             if (network.BitmapImage != null)
             {
                 panelBackground.Enabled = true;
-                labelBackgroundName.Text = Path.GetFileName(inFileName);
+                labelBackgroundName.Text = Path.GetFileName(network.BitmapPath);
                 labelMapSize.Text = "Map size: " + network.BitmapImage.Width + " x " + network.BitmapImage.Height;
-                textBoxWidth.Text = network.BitmapImage.Width.ToString();
-                textBoxHeight.Text = network.BitmapImage.Height.ToString();
+
+                textBoxWidth.Text = network.MapWidth.ToString();
+                textBoxHeight.Text = network.MapHeight.ToString();
+
+                CoordTransformations.Umax = network.BitmapImage.Width;
+                CoordTransformations.Vmin = network.BitmapImage.Height;
+                CoordTransformations.Xmax = network.MapWidth;
+                CoordTransformations.Ymax = network.MapHeight;
             }
             else
             {
@@ -446,6 +480,31 @@ namespace cv1
                 textBoxWidth.Text = string.Empty;
                 textBoxHeight.Text = string.Empty;
             }
+        }
+
+        private void textBoxWidth_TextChanged(object sender, EventArgs e)
+        {
+            if (network == null)
+                return;
+
+            if (float.TryParse(textBoxWidth.Text, out float dialogValue))
+            {
+                network.MapWidth = dialogValue;
+                RefreshUserInterface();
+            }
+            else
+                MessageBox.Show("Wrong number format");
+        }
+
+        private void textBoxHeight_TextChanged(object sender, EventArgs e)
+        {
+            if (float.TryParse(textBoxWidth.Text, out float dialogValue))
+            {
+                network.MapHeight = dialogValue;
+                RefreshUserInterface();
+            }
+            else
+                MessageBox.Show("Wrong number format");
         }
     }
 }

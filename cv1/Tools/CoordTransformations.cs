@@ -10,12 +10,12 @@ namespace cv1.Tools
     {
         private const float Xmin = 0.0f;
         private const float Ymin = 0.0f;
-        private const float Xmax = 27442.6696f;
-        private const float Ymax = 19257.4768f;
+        public static float Xmax = 27442.6696f;
+        public static float Ymax = 19257.4768f;
 
         private const int Umin = 0;
-        private const int Vmin = 768;
-        private const int Umax = 1094;
+        public static int Vmin = 768;
+        public static int Umax = 1094;
         private const int Vmax = 0;
 
         public static PointF FromUVToXY(Point p)

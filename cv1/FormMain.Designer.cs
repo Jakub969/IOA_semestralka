@@ -29,6 +29,14 @@
         private void InitializeComponent()
         {
             panelTools = new Panel();
+            panelShortestPath = new Panel();
+            label4 = new Label();
+            textBoxShortestPath = new TextBox();
+            buttonShortestPath = new Button();
+            labelEndNode = new Label();
+            labelStartNode = new Label();
+            numericUpDownEndNode = new NumericUpDown();
+            numericUpDownStartNode = new NumericUpDown();
             panelBackground = new Panel();
             label9 = new Label();
             textBoxHeight = new TextBox();
@@ -41,13 +49,6 @@
             label1 = new Label();
             trackBarBackgroundTransparency = new TrackBar();
             checkBoxBackgroundVisible = new CheckBox();
-            label4 = new Label();
-            textBoxShortestPath = new TextBox();
-            buttonShortestPath = new Button();
-            label3 = new Label();
-            label2 = new Label();
-            numericUpDown2 = new NumericUpDown();
-            numericUpDown1 = new NumericUpDown();
             groupBoxState = new GroupBox();
             radioButtonInsertEdge = new RadioButton();
             radioButtonInsertNode = new RadioButton();
@@ -65,10 +66,11 @@
             exitToolStripMenuItem = new ToolStripMenuItem();
             doubleBufferPanelDrawing = new DoubleBufferPanel();
             panelTools.SuspendLayout();
+            panelShortestPath.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownEndNode).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownStartNode).BeginInit();
             panelBackground.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)trackBarBackgroundTransparency).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             groupBoxState.SuspendLayout();
             menuStrip1.SuspendLayout();
             SuspendLayout();
@@ -76,14 +78,8 @@
             // panelTools
             // 
             panelTools.BackColor = SystemColors.AppWorkspace;
+            panelTools.Controls.Add(panelShortestPath);
             panelTools.Controls.Add(panelBackground);
-            panelTools.Controls.Add(label4);
-            panelTools.Controls.Add(textBoxShortestPath);
-            panelTools.Controls.Add(buttonShortestPath);
-            panelTools.Controls.Add(label3);
-            panelTools.Controls.Add(label2);
-            panelTools.Controls.Add(numericUpDown2);
-            panelTools.Controls.Add(numericUpDown1);
             panelTools.Controls.Add(groupBoxState);
             panelTools.Dock = DockStyle.Left;
             panelTools.Location = new Point(0, 24);
@@ -91,8 +87,82 @@
             panelTools.Size = new Size(179, 774);
             panelTools.TabIndex = 0;
             // 
+            // panelShortestPath
+            // 
+            panelShortestPath.BackColor = Color.FromArgb(192, 255, 192);
+            panelShortestPath.Controls.Add(label4);
+            panelShortestPath.Controls.Add(textBoxShortestPath);
+            panelShortestPath.Controls.Add(buttonShortestPath);
+            panelShortestPath.Controls.Add(labelEndNode);
+            panelShortestPath.Controls.Add(labelStartNode);
+            panelShortestPath.Controls.Add(numericUpDownEndNode);
+            panelShortestPath.Controls.Add(numericUpDownStartNode);
+            panelShortestPath.Dock = DockStyle.Top;
+            panelShortestPath.Location = new Point(0, 253);
+            panelShortestPath.Name = "panelShortestPath";
+            panelShortestPath.Size = new Size(179, 198);
+            panelShortestPath.TabIndex = 21;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(7, 142);
+            label4.Name = "label4";
+            label4.Size = new Size(107, 15);
+            label4.TabIndex = 44;
+            label4.Text = "Total distance (km)";
+            // 
+            // textBoxShortestPath
+            // 
+            textBoxShortestPath.Location = new Point(5, 162);
+            textBoxShortestPath.Name = "textBoxShortestPath";
+            textBoxShortestPath.Size = new Size(161, 23);
+            textBoxShortestPath.TabIndex = 43;
+            // 
+            // buttonShortestPath
+            // 
+            buttonShortestPath.Location = new Point(5, 108);
+            buttonShortestPath.Name = "buttonShortestPath";
+            buttonShortestPath.Size = new Size(161, 23);
+            buttonShortestPath.TabIndex = 42;
+            buttonShortestPath.Text = "Find shortest path";
+            buttonShortestPath.UseVisualStyleBackColor = true;
+            // 
+            // labelEndNode
+            // 
+            labelEndNode.AutoSize = true;
+            labelEndNode.Location = new Point(8, 52);
+            labelEndNode.Name = "labelEndNode";
+            labelEndNode.Size = new Size(57, 15);
+            labelEndNode.TabIndex = 41;
+            labelEndNode.Text = "End node";
+            // 
+            // labelStartNode
+            // 
+            labelStartNode.AutoSize = true;
+            labelStartNode.Location = new Point(8, 3);
+            labelStartNode.Name = "labelStartNode";
+            labelStartNode.Size = new Size(61, 15);
+            labelStartNode.TabIndex = 40;
+            labelStartNode.Text = "Start node";
+            // 
+            // numericUpDownEndNode
+            // 
+            numericUpDownEndNode.Location = new Point(5, 70);
+            numericUpDownEndNode.Name = "numericUpDownEndNode";
+            numericUpDownEndNode.Size = new Size(161, 23);
+            numericUpDownEndNode.TabIndex = 39;
+            // 
+            // numericUpDownStartNode
+            // 
+            numericUpDownStartNode.Location = new Point(5, 21);
+            numericUpDownStartNode.Name = "numericUpDownStartNode";
+            numericUpDownStartNode.Size = new Size(161, 23);
+            numericUpDownStartNode.TabIndex = 38;
+            // 
             // panelBackground
             // 
+            panelBackground.BackColor = Color.AntiqueWhite;
             panelBackground.Controls.Add(label9);
             panelBackground.Controls.Add(textBoxHeight);
             panelBackground.Controls.Add(label8);
@@ -104,9 +174,10 @@
             panelBackground.Controls.Add(label1);
             panelBackground.Controls.Add(trackBarBackgroundTransparency);
             panelBackground.Controls.Add(checkBoxBackgroundVisible);
+            panelBackground.Dock = DockStyle.Top;
             panelBackground.Location = new Point(0, 0);
             panelBackground.Name = "panelBackground";
-            panelBackground.Size = new Size(179, 259);
+            panelBackground.Size = new Size(179, 253);
             panelBackground.TabIndex = 20;
             // 
             // label9
@@ -124,7 +195,9 @@
             textBoxHeight.Name = "textBoxHeight";
             textBoxHeight.Size = new Size(100, 23);
             textBoxHeight.TabIndex = 29;
+            textBoxHeight.Text = "100";
             textBoxHeight.TextAlign = HorizontalAlignment.Right;
+            textBoxHeight.TextChanged += textBoxHeight_TextChanged;
             // 
             // label8
             // 
@@ -141,7 +214,9 @@
             textBoxWidth.Name = "textBoxWidth";
             textBoxWidth.Size = new Size(100, 23);
             textBoxWidth.TabIndex = 27;
+            textBoxWidth.Text = "100";
             textBoxWidth.TextAlign = HorizontalAlignment.Right;
+            textBoxWidth.TextChanged += textBoxWidth_TextChanged;
             // 
             // label6
             // 
@@ -211,70 +286,12 @@
             checkBoxBackgroundVisible.UseVisualStyleBackColor = true;
             checkBoxBackgroundVisible.CheckedChanged += checkBoxBackgroundVisible_CheckedChanged;
             // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(11, 510);
-            label4.Name = "label4";
-            label4.Size = new Size(107, 15);
-            label4.TabIndex = 11;
-            label4.Text = "Total distance (km)";
-            // 
-            // textBoxShortestPath
-            // 
-            textBoxShortestPath.Location = new Point(9, 530);
-            textBoxShortestPath.Name = "textBoxShortestPath";
-            textBoxShortestPath.Size = new Size(161, 23);
-            textBoxShortestPath.TabIndex = 10;
-            // 
-            // buttonShortestPath
-            // 
-            buttonShortestPath.Location = new Point(9, 476);
-            buttonShortestPath.Name = "buttonShortestPath";
-            buttonShortestPath.Size = new Size(161, 23);
-            buttonShortestPath.TabIndex = 9;
-            buttonShortestPath.Text = "Find shortest path";
-            buttonShortestPath.UseVisualStyleBackColor = true;
-            buttonShortestPath.Click += buttonShortestPath_Click;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(12, 420);
-            label3.Name = "label3";
-            label3.Size = new Size(57, 15);
-            label3.TabIndex = 8;
-            label3.Text = "End node";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(12, 371);
-            label2.Name = "label2";
-            label2.Size = new Size(61, 15);
-            label2.TabIndex = 7;
-            label2.Text = "Start node";
-            // 
-            // numericUpDown2
-            // 
-            numericUpDown2.Location = new Point(9, 438);
-            numericUpDown2.Name = "numericUpDown2";
-            numericUpDown2.Size = new Size(161, 23);
-            numericUpDown2.TabIndex = 6;
-            // 
-            // numericUpDown1
-            // 
-            numericUpDown1.Location = new Point(9, 389);
-            numericUpDown1.Name = "numericUpDown1";
-            numericUpDown1.Size = new Size(161, 23);
-            numericUpDown1.TabIndex = 5;
-            // 
             // groupBoxState
             // 
             groupBoxState.Controls.Add(radioButtonInsertEdge);
             groupBoxState.Controls.Add(radioButtonInsertNode);
             groupBoxState.Controls.Add(radioButtonEdit);
-            groupBoxState.Location = new Point(9, 265);
+            groupBoxState.Location = new Point(7, 467);
             groupBoxState.Name = "groupBoxState";
             groupBoxState.Size = new Size(161, 103);
             groupBoxState.TabIndex = 2;
@@ -419,12 +436,13 @@
             KeyDown += Form1_KeyDown;
             KeyUp += Form1_KeyUp;
             panelTools.ResumeLayout(false);
-            panelTools.PerformLayout();
+            panelShortestPath.ResumeLayout(false);
+            panelShortestPath.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownEndNode).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownStartNode).EndInit();
             panelBackground.ResumeLayout(false);
             panelBackground.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)trackBarBackgroundTransparency).EndInit();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
             groupBoxState.ResumeLayout(false);
             groupBoxState.PerformLayout();
             menuStrip1.ResumeLayout(false);
@@ -448,13 +466,6 @@
         private ToolStripMenuItem closeToolStripMenuItem;
         private ToolStripMenuItem saveAsToolStripMenuItem;
         private ToolStripMenuItem exitToolStripMenuItem;
-        private Button buttonShortestPath;
-        private Label label3;
-        private Label label2;
-        private NumericUpDown numericUpDown2;
-        private NumericUpDown numericUpDown1;
-        private TextBox textBoxShortestPath;
-        private Label label4;
         private ToolStripMenuItem saveToolStripMenuItem;
         private ToolStripMenuItem loadBackgroundToolStripMenuItem;
         private ToolStripSeparator toolStripMenuItem1;
@@ -471,5 +482,13 @@
         private TrackBar trackBarBackgroundTransparency;
         private CheckBox checkBoxBackgroundVisible;
         public Label labelMapSize;
+        private Panel panelShortestPath;
+        private Label label4;
+        private TextBox textBoxShortestPath;
+        private Button buttonShortestPath;
+        private Label labelEndNode;
+        private Label labelStartNode;
+        private NumericUpDown numericUpDownEndNode;
+        private NumericUpDown numericUpDownStartNode;
     }
 }
