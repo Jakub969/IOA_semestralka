@@ -18,6 +18,8 @@ namespace cv1
         private bool framedSelectionBox = true;
         private NetworkNode? edgeNodeStart = null;
         private string projectPath = string.Empty;
+        private NetworkNode clickedNode = null;
+        private NetworkEdge clickedEdge = null;
 
         public FormMain()
         {
@@ -101,12 +103,19 @@ namespace cv1
                         state = EnumEditorState.InsertEdge;
                 }
             }
-            else if (e.Button == MouseButtons.Right)
+            else if (e.Button == MouseButtons.Right && mode == EnumEditorMode.Edit)
             {
+                clickedNode = network.IsNodeHitByMouse(e.Location);
+                clickedEdge = network.IsEdgeHitByMouse(e.Location);
+
+                if (clickedNode != null || clickedEdge != null)
+                {
+                    contextMenuProperties.Show(doubleBufferPanelDrawing, e.Location);
+                }
             }
 
             doubleBufferPanelDrawing.Invalidate();
-            RefreshUserInterface(); 
+            RefreshUserInterface();
         }
 
         private void doubleBufferPanelDrawing_MouseMove(object sender, MouseEventArgs e)
@@ -204,7 +213,7 @@ namespace cv1
             network.NodeDrawingOffset = new(0, 0);
 
             doubleBufferPanelDrawing.Invalidate();
-            RefreshUserInterface(); 
+            RefreshUserInterface();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -505,6 +514,29 @@ namespace cv1
             }
             else
                 MessageBox.Show("Wrong number format");
+        }
+
+        private void propertiesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (clickedNode != null)
+            {
+                NodePropertiesForm nodeForm = new NodePropertiesForm(clickedNode);
+                if (nodeForm.ShowDialog() == DialogResult.OK)
+                {
+                    doubleBufferPanelDrawing.Invalidate();
+                }
+            }
+            else if (clickedEdge != null)
+            {
+                EdgePropertiesForm edgeForm = new EdgePropertiesForm(clickedEdge);
+                if (edgeForm.ShowDialog() == DialogResult.OK)
+                {
+                    doubleBufferPanelDrawing.Invalidate();
+                }
+            }
+
+            clickedNode = null;
+            clickedEdge = null;
         }
     }
 }

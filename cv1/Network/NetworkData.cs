@@ -206,6 +206,17 @@ namespace cv1.Network
             return null;
         }
 
+        public NetworkEdge? IsEdgeHitByMouse(Point mousePosition)
+        {
+            foreach (var edge in edges)
+            {
+                if (edge.IsHitByMouse(mousePosition))
+                    return edge;
+            }
+            return null;
+        }
+
+
         public bool HoverOverSelectedNode(Point parMousePosition)
         {
             NetworkNode? nodeMouseOver = IsNodeHitByMouse(parMousePosition);

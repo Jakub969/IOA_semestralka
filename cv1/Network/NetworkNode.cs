@@ -1,5 +1,6 @@
 ﻿using cv1.Interfaces;
 using System.Runtime.Serialization;
+using cv1.Enums;
 
 namespace cv1.Network
 {
@@ -9,9 +10,17 @@ namespace cv1.Network
         [DataMember()]
         private int id = parID;
         [DataMember()]
-        private Size size = new (12, 12);
+        private Size size = new (15, 15);
         [DataMember()]
         private Point position = parPosition;
+        [DataMember()]
+        public string Name { get; set; } = string.Empty;
+
+        [DataMember()]
+        public EnumNodeType Type { get; set; } = EnumNodeType.NotSpecified;
+
+        [DataMember()]
+        public float CapacityOrDemand { get; set; } = 0;
 
         public bool Selected { get; set; }
 
@@ -56,6 +65,12 @@ namespace cv1.Network
             };
 
             g.DrawString(id.ToString(), f, Brushes.Red, boundRect, stringFormat);
+            
+            string additionalInfo = $"{Name}\n{TypeToString()}\nKap.: {CapacityOrDemand}";
+            using Font infoFont = new("Arial", 7, FontStyle.Regular, GraphicsUnit.Point);
+
+            Point infoPosition = new(Position.X, Position.Y + size.Height / 2 + 15);
+            g.DrawString(additionalInfo, infoFont, Brushes.Black, infoPosition, stringFormat);
 
             if (Selected)
             {
@@ -69,6 +84,17 @@ namespace cv1.Network
         public bool IsHitByMouse(Point mousePosition)
         {
             return BoundingRectangle.Contains(mousePosition);
+        }
+
+        private string TypeToString()
+        {
+            return Type switch
+            {
+                EnumNodeType.PrimarySource => "Primárny zdroj",
+                EnumNodeType.Customer => "Zákazník",
+                EnumNodeType.PotentialWarehouse => "Možný sklad",
+                _ => "Bez špecifikácie"
+            };
         }
     }
 }

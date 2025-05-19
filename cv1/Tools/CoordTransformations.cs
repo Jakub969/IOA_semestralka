@@ -14,8 +14,8 @@ namespace cv1.Tools
         public static float Ymax = 19257.4768f;
 
         private const int Umin = 0;
-        public static int Vmin = 768;
-        public static int Umax = 1094;
+        public static int Vmin = 1060;
+        public static int Umax = 1588;
         private const int Vmax = 0;
 
         public static PointF FromUVToXY(Point p)
