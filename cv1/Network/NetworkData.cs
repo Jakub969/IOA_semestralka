@@ -1,5 +1,6 @@
 ﻿using cv1.Interfaces;
 using System.Runtime.Serialization;
+using cv1.Enums;
 
 namespace cv1.Network
 {
@@ -76,6 +77,81 @@ namespace cv1.Network
             BackgroundVisible = true;  
             Key = Keys.None;    
         }
+
+        public float[,] CreateAdjacencyMatrix()
+        {
+            int n = Nodes.Count;
+            float[,] adjMatrix = new float[n, n];
+
+            for (int i = 0; i < n; i++)
+            for (int j = 0; j < n; j++)
+                adjMatrix[i, j] = float.PositiveInfinity;
+
+            foreach (var edge in Edges.Where(e => e.IsEnabled))
+            {
+                int i = Nodes.IndexOf(edge.StartNode);
+                int j = Nodes.IndexOf(edge.EndNode);
+                adjMatrix[i, j] = edge.Length;
+                adjMatrix[j, i] = edge.Length;
+            }
+
+            return adjMatrix;
+        }
+
+        public bool IsConnected()
+        {
+            if (Nodes.Count == 0) return true;
+
+            var visited = new HashSet<NetworkNode>();
+            void DFS(NetworkNode node)
+            {
+                visited.Add(node);
+                var neighbors = Edges
+                    .Where(e => e.IsEnabled && (e.StartNode == node || e.EndNode == node))
+                    .Select(e => e.StartNode == node ? e.EndNode : e.StartNode);
+                foreach (var neighbor in neighbors.Where(n => !visited.Contains(n)))
+                    DFS(neighbor);
+            }
+
+            DFS(Nodes.First());
+            return visited.Count == Nodes.Count;
+        }
+
+        public bool ValidateParameters(out string message)
+        {
+            bool isPrimarySource = false;
+            foreach (var node in Nodes)
+            {
+                if (node.Type == EnumNodeType.Customer && node.CapacityOrDemand <= 0)
+                {
+                    message = $"Customer {node.Name} must have a positive demand.";
+                    return false;
+                }
+                if (node.Type == EnumNodeType.PrimarySource && node.CapacityOrDemand <= 0)
+                {
+                    message = $"Source {node.Name} must have a positive capacity.";
+                    return false;
+                }
+                if (node.Type == EnumNodeType.PrimarySource)
+                    isPrimarySource = true;
+
+            }
+
+            if (!isPrimarySource)
+            {
+                message = "At least one primary source is required.";
+                return false;
+            }
+            message = "All parameters are valid.";
+            return true;
+        }
+
+
+        public List<NetworkNode> IsolatedNodes()
+        {
+            return Nodes.Where(node => !Edges.Any(e => e.StartNode == node || e.EndNode == node)).ToList();
+        }
+
 
         public void LoadBackgroundImage()
         {
@@ -188,7 +264,6 @@ namespace cv1.Network
                 }
             }
 
-            // remove edges that no longer have start or end nodes
             var validNodes = new HashSet<NetworkNode>(nodes);
             edges = edges.Where(edge => validNodes.Contains(edge.StartNode) && validNodes.Contains(edge.EndNode)).ToList();
         }

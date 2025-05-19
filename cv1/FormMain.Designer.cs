@@ -30,6 +30,9 @@
         {
             components = new System.ComponentModel.Container();
             panelTools = new Panel();
+            lastPanel = new Panel();
+            buttonClassicalCW = new Button();
+            buttonControl = new Button();
             panelShortestPath = new Panel();
             label4 = new Label();
             textBoxShortestPath = new TextBox();
@@ -68,7 +71,10 @@
             doubleBufferPanelDrawing = new DoubleBufferPanel();
             contextMenuProperties = new ContextMenuStrip(components);
             propertiesToolStripMenuItem = new ToolStripMenuItem();
+            labelCarCapacity = new Label();
+            numericCarCapacity = new NumericUpDown();
             panelTools.SuspendLayout();
+            lastPanel.SuspendLayout();
             panelShortestPath.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDownEndNode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownStartNode).BeginInit();
@@ -77,11 +83,13 @@
             groupBoxState.SuspendLayout();
             menuStrip1.SuspendLayout();
             contextMenuProperties.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericCarCapacity).BeginInit();
             SuspendLayout();
             // 
             // panelTools
             // 
             panelTools.BackColor = SystemColors.AppWorkspace;
+            panelTools.Controls.Add(lastPanel);
             panelTools.Controls.Add(panelShortestPath);
             panelTools.Controls.Add(panelBackground);
             panelTools.Controls.Add(groupBoxState);
@@ -91,6 +99,38 @@
             panelTools.Name = "panelTools";
             panelTools.Size = new Size(205, 983);
             panelTools.TabIndex = 0;
+            // 
+            // lastPanel
+            // 
+            lastPanel.BackColor = Color.Gold;
+            lastPanel.Controls.Add(numericCarCapacity);
+            lastPanel.Controls.Add(labelCarCapacity);
+            lastPanel.Controls.Add(buttonClassicalCW);
+            lastPanel.Controls.Add(buttonControl);
+            lastPanel.Location = new Point(0, 767);
+            lastPanel.Name = "lastPanel";
+            lastPanel.Size = new Size(205, 216);
+            lastPanel.TabIndex = 0;
+            // 
+            // buttonClassicalCW
+            // 
+            buttonClassicalCW.Location = new Point(9, 85);
+            buttonClassicalCW.Name = "buttonClassicalCW";
+            buttonClassicalCW.Size = new Size(180, 29);
+            buttonClassicalCW.TabIndex = 1;
+            buttonClassicalCW.Text = "Classic CW";
+            buttonClassicalCW.UseVisualStyleBackColor = true;
+            buttonClassicalCW.Click += buttonClassicalCW_Click;
+            // 
+            // buttonControl
+            // 
+            buttonControl.Location = new Point(9, 13);
+            buttonControl.Name = "buttonControl";
+            buttonControl.Size = new Size(181, 29);
+            buttonControl.TabIndex = 0;
+            buttonControl.Text = "Graph check";
+            buttonControl.UseVisualStyleBackColor = true;
+            buttonControl.Click += buttonControl_Click;
             // 
             // panelShortestPath
             // 
@@ -457,6 +497,24 @@
             propertiesToolStripMenuItem.Text = "Properties";
             propertiesToolStripMenuItem.Click += propertiesToolStripMenuItem_Click;
             // 
+            // labelCarCapacity
+            // 
+            labelCarCapacity.AutoSize = true;
+            labelCarCapacity.Location = new Point(9, 54);
+            labelCarCapacity.Name = "labelCarCapacity";
+            labelCarCapacity.Size = new Size(90, 20);
+            labelCarCapacity.TabIndex = 2;
+            labelCarCapacity.Text = "Car capacity";
+            // 
+            // numericCarCapacity
+            // 
+            numericCarCapacity.Location = new Point(105, 52);
+            numericCarCapacity.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            numericCarCapacity.Name = "numericCarCapacity";
+            numericCarCapacity.Size = new Size(84, 27);
+            numericCarCapacity.TabIndex = 3;
+            numericCarCapacity.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -475,6 +533,8 @@
             KeyDown += Form1_KeyDown;
             KeyUp += Form1_KeyUp;
             panelTools.ResumeLayout(false);
+            lastPanel.ResumeLayout(false);
+            lastPanel.PerformLayout();
             panelShortestPath.ResumeLayout(false);
             panelShortestPath.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDownEndNode).EndInit();
@@ -487,6 +547,7 @@
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             contextMenuProperties.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)numericCarCapacity).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -532,5 +593,10 @@
         private NumericUpDown numericUpDownStartNode;
         private ContextMenuStrip contextMenuProperties;
         private ToolStripMenuItem propertiesToolStripMenuItem;
+        private Panel lastPanel;
+        private Button buttonControl;
+        private Button buttonClassicalCW;
+        private NumericUpDown numericCarCapacity;
+        private Label labelCarCapacity;
     }
 }

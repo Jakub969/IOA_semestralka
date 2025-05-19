@@ -65,8 +65,17 @@ namespace cv1.Network
             };
 
             g.DrawString(id.ToString(), f, Brushes.Red, boundRect, stringFormat);
-            
-            string additionalInfo = $"{Name}\n{TypeToString()}\nKap.: {CapacityOrDemand}";
+
+            string additionalInfo;
+            if (Type == EnumNodeType.Customer || Type == EnumNodeType.NotSpecified)
+            {
+                additionalInfo = $"{Name}\n{TypeToString()}\nPož.: {CapacityOrDemand}";
+            }
+            else
+            {
+                additionalInfo = $"{Name}\n{TypeToString()}\nKap.: {CapacityOrDemand}";
+            }
+
             using Font infoFont = new("Arial", 7, FontStyle.Regular, GraphicsUnit.Point);
 
             Point infoPosition = new(Position.X, Position.Y + size.Height / 2 + 15);

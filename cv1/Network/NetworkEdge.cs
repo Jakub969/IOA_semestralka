@@ -51,14 +51,15 @@ namespace cv1.Network
             Point pStart = startNode.Position;
             Point pEnd = endNode.Position;
 
-            using Pen p = new(Color.Black, 2.0f);
+            var penColor = Selected ? Color.Green : Color.Black;
+            using Pen p = new(penColor, 2.0f);
 
             if (Selected)
                 p.Color = Color.Blue; 
 
             g.DrawLine(p, pStart, pEnd);
 
-            string edgeInfo = $"ID: {id}, Dĺžka: {Length:F2}";
+            string edgeInfo = $"ID: {id}, Dĺžka: {Length:F1}";
             int posX = (int)((pEnd.X - pStart.X) / 2.0f);
             int posY = (int)((pEnd.Y - pStart.Y) / 2.0f);
 

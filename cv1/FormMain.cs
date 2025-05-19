@@ -577,5 +577,59 @@ namespace cv1
                 doubleBufferPanelDrawing.Invalidate();
             }
         }
+
+        private void buttonClassicalCW_Click(object sender, EventArgs e)
+        {
+            if (!network.ValidateParameters(out string validationMsg))
+            {
+                MessageBox.Show(validationMsg, "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var solver = new ClarkeWrightSolver(network, vehicleCapacity: (float)numericCarCapacity.Value);
+            var routes = solver.Solve();
+
+            DisplayRoutes(routes);
+        }
+
+        private void DisplayRoutes(List<List<NetworkNode>> routes)
+        {
+            network.Nodes.ForEach(n => n.Selected = false);
+            network.Edges.ForEach(e => e.Selected = false);
+
+            foreach (var route in routes)
+            {
+                for (int i = 0; i < route.Count - 1; i++)
+                {
+                    var edge = network.Edges.FirstOrDefault(e =>
+                        (e.StartNode == route[i] && e.EndNode == route[i + 1]) ||
+                        (e.EndNode == route[i] && e.StartNode == route[i + 1]));
+
+                    if (edge != null)
+                        edge.Selected = true;
+                }
+            }
+
+            doubleBufferPanelDrawing.Invalidate();
+        }
+
+        private void buttonControl_Click(object sender, EventArgs e)
+        {
+            if (!network.IsConnected())
+            {
+                MessageBox.Show("The network is not fully connected. Please ensure connectivity before running algorithms.", "Connectivity Check", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var isolatedNodes = network.IsolatedNodes();
+            if (isolatedNodes.Any())
+            {
+                MessageBox.Show($"The network has isolated nodes: {string.Join(", ", isolatedNodes.Select(n => n.Name))}", "Isolation Check", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            MessageBox.Show("The network is fully connected and has no isolated nodes.", "Connectivity Check", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
+
+
 }
