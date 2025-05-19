@@ -603,6 +603,7 @@ namespace cv1
                 }
                 message += $"{route.Last().Name}\n";
             }
+            Console.WriteLine(message);
             MessageBox.Show(message, "Routes", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             doubleBufferPanelDrawing.Invalidate();
