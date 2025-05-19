@@ -135,6 +135,7 @@
             buttonShortestPath.TabIndex = 42;
             buttonShortestPath.Text = "Find shortest path";
             buttonShortestPath.UseVisualStyleBackColor = true;
+            buttonShortestPath.Click += buttonShortestPath_Click;
             // 
             // labelEndNode
             // 
@@ -447,12 +448,12 @@
             contextMenuProperties.ImageScalingSize = new Size(20, 20);
             contextMenuProperties.Items.AddRange(new ToolStripItem[] { propertiesToolStripMenuItem });
             contextMenuProperties.Name = "contextMenuProperties";
-            contextMenuProperties.Size = new Size(211, 56);
+            contextMenuProperties.Size = new Size(146, 28);
             // 
             // propertiesToolStripMenuItem
             // 
             propertiesToolStripMenuItem.Name = "propertiesToolStripMenuItem";
-            propertiesToolStripMenuItem.Size = new Size(210, 24);
+            propertiesToolStripMenuItem.Size = new Size(145, 24);
             propertiesToolStripMenuItem.Text = "Properties";
             propertiesToolStripMenuItem.Click += propertiesToolStripMenuItem_Click;
             // 

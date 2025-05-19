@@ -416,11 +416,6 @@ namespace cv1
             LoadNetworkData();
         }
 
-        private void buttonShortestPath_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void loadBackgroundToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new()
@@ -537,6 +532,50 @@ namespace cv1
 
             clickedNode = null;
             clickedEdge = null;
+        }
+
+        private void buttonShortestPath_Click(object sender, EventArgs e)
+        {
+            if (network == null || network.Nodes.Count == 0)
+            {
+                MessageBox.Show("No nodes to calculate the path.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            int startNodeIndex = (int)numericUpDownStartNode.Value;
+            int endNodeIndex = (int)numericUpDownEndNode.Value;
+
+            if (startNodeIndex == endNodeIndex)
+            {
+                MessageBox.Show("Start and end nodes must be different.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var startNode = network.Nodes.ElementAtOrDefault(startNodeIndex);
+            var endNode = network.Nodes.ElementAtOrDefault(endNodeIndex);
+
+            if (startNode == null || endNode == null)
+            {
+                MessageBox.Show("Invalid node selection.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            var pathFinder = new ShortestPath(network);
+            var (path, totalDistance) = pathFinder.FindPath(startNode, endNode);
+
+            if (path.Count == 0 || float.IsPositiveInfinity(totalDistance))
+            {
+                MessageBox.Show("No path found between selected nodes.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                textBoxShortestPath.Text = "No path";
+            }
+            else
+            {
+                network.Nodes.ForEach(n => n.Selected = false);
+                path.ForEach(n => n.Selected = true);
+
+                textBoxShortestPath.Text = totalDistance.ToString("F2");
+                doubleBufferPanelDrawing.Invalidate();
+            }
         }
     }
 }
