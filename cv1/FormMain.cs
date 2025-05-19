@@ -594,21 +594,16 @@ namespace cv1
 
         private void DisplayRoutes(List<List<NetworkNode>> routes)
         {
-            network.Nodes.ForEach(n => n.Selected = false);
-            network.Edges.ForEach(e => e.Selected = false);
-
+            String message = "";
             foreach (var route in routes)
             {
                 for (int i = 0; i < route.Count - 1; i++)
                 {
-                    var edge = network.Edges.FirstOrDefault(e =>
-                        (e.StartNode == route[i] && e.EndNode == route[i + 1]) ||
-                        (e.EndNode == route[i] && e.StartNode == route[i + 1]));
-
-                    if (edge != null)
-                        edge.Selected = true;
+                    message += $"{route[i].Name} -> ";
                 }
+                message += $"{route.Last().Name}\n";
             }
+            MessageBox.Show(message, "Routes", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             doubleBufferPanelDrawing.Invalidate();
         }

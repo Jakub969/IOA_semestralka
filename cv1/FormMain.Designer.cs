@@ -30,10 +30,16 @@
         {
             components = new System.ComponentModel.Container();
             panelTools = new Panel();
+            groupBoxState = new GroupBox();
+            radioButtonInsertEdge = new RadioButton();
+            radioButtonInsertNode = new RadioButton();
+            radioButtonEdit = new RadioButton();
+            panelShortestPath = new Panel();
             lastPanel = new Panel();
+            numericCarCapacity = new NumericUpDown();
+            labelCarCapacity = new Label();
             buttonClassicalCW = new Button();
             buttonControl = new Button();
-            panelShortestPath = new Panel();
             label4 = new Label();
             textBoxShortestPath = new TextBox();
             buttonShortestPath = new Button();
@@ -53,10 +59,6 @@
             label1 = new Label();
             trackBarBackgroundTransparency = new TrackBar();
             checkBoxBackgroundVisible = new CheckBox();
-            groupBoxState = new GroupBox();
-            radioButtonInsertEdge = new RadioButton();
-            radioButtonInsertNode = new RadioButton();
-            radioButtonEdit = new RadioButton();
             menuStrip1 = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
             newToolStripMenuItem = new ToolStripMenuItem();
@@ -71,34 +73,101 @@
             doubleBufferPanelDrawing = new DoubleBufferPanel();
             contextMenuProperties = new ContextMenuStrip(components);
             propertiesToolStripMenuItem = new ToolStripMenuItem();
-            labelCarCapacity = new Label();
-            numericCarCapacity = new NumericUpDown();
             panelTools.SuspendLayout();
-            lastPanel.SuspendLayout();
+            groupBoxState.SuspendLayout();
             panelShortestPath.SuspendLayout();
+            lastPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericCarCapacity).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownEndNode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownStartNode).BeginInit();
             panelBackground.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)trackBarBackgroundTransparency).BeginInit();
-            groupBoxState.SuspendLayout();
             menuStrip1.SuspendLayout();
             contextMenuProperties.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)numericCarCapacity).BeginInit();
             SuspendLayout();
             // 
             // panelTools
             // 
             panelTools.BackColor = SystemColors.AppWorkspace;
-            panelTools.Controls.Add(lastPanel);
+            panelTools.Controls.Add(groupBoxState);
             panelTools.Controls.Add(panelShortestPath);
             panelTools.Controls.Add(panelBackground);
-            panelTools.Controls.Add(groupBoxState);
             panelTools.Dock = DockStyle.Left;
             panelTools.Location = new Point(0, 30);
             panelTools.Margin = new Padding(3, 4, 3, 4);
             panelTools.Name = "panelTools";
             panelTools.Size = new Size(205, 983);
             panelTools.TabIndex = 0;
+            // 
+            // groupBoxState
+            // 
+            groupBoxState.Controls.Add(radioButtonInsertEdge);
+            groupBoxState.Controls.Add(radioButtonInsertNode);
+            groupBoxState.Controls.Add(radioButtonEdit);
+            groupBoxState.Location = new Point(10, 734);
+            groupBoxState.Margin = new Padding(3, 4, 3, 4);
+            groupBoxState.Name = "groupBoxState";
+            groupBoxState.Padding = new Padding(3, 4, 3, 4);
+            groupBoxState.Size = new Size(184, 137);
+            groupBoxState.TabIndex = 2;
+            groupBoxState.TabStop = false;
+            groupBoxState.Text = "Editor state";
+            // 
+            // radioButtonInsertEdge
+            // 
+            radioButtonInsertEdge.AutoSize = true;
+            radioButtonInsertEdge.Location = new Point(13, 96);
+            radioButtonInsertEdge.Margin = new Padding(3, 4, 3, 4);
+            radioButtonInsertEdge.Name = "radioButtonInsertEdge";
+            radioButtonInsertEdge.Size = new Size(104, 24);
+            radioButtonInsertEdge.TabIndex = 2;
+            radioButtonInsertEdge.Text = "Insert edge";
+            radioButtonInsertEdge.UseVisualStyleBackColor = true;
+            radioButtonInsertEdge.CheckedChanged += radioButtonInsertEdge_CheckedChanged;
+            // 
+            // radioButtonInsertNode
+            // 
+            radioButtonInsertNode.AutoSize = true;
+            radioButtonInsertNode.Location = new Point(13, 63);
+            radioButtonInsertNode.Margin = new Padding(3, 4, 3, 4);
+            radioButtonInsertNode.Name = "radioButtonInsertNode";
+            radioButtonInsertNode.Size = new Size(104, 24);
+            radioButtonInsertNode.TabIndex = 1;
+            radioButtonInsertNode.Text = "Insert node";
+            radioButtonInsertNode.UseVisualStyleBackColor = true;
+            radioButtonInsertNode.CheckedChanged += radioButtonInsertNode_CheckedChanged;
+            // 
+            // radioButtonEdit
+            // 
+            radioButtonEdit.AutoSize = true;
+            radioButtonEdit.Checked = true;
+            radioButtonEdit.Location = new Point(13, 29);
+            radioButtonEdit.Margin = new Padding(3, 4, 3, 4);
+            radioButtonEdit.Name = "radioButtonEdit";
+            radioButtonEdit.Size = new Size(56, 24);
+            radioButtonEdit.TabIndex = 0;
+            radioButtonEdit.TabStop = true;
+            radioButtonEdit.Text = "Edit";
+            radioButtonEdit.UseVisualStyleBackColor = true;
+            radioButtonEdit.CheckedChanged += radioButtonEdit_CheckedChanged;
+            // 
+            // panelShortestPath
+            // 
+            panelShortestPath.BackColor = Color.FromArgb(192, 255, 192);
+            panelShortestPath.Controls.Add(lastPanel);
+            panelShortestPath.Controls.Add(label4);
+            panelShortestPath.Controls.Add(textBoxShortestPath);
+            panelShortestPath.Controls.Add(buttonShortestPath);
+            panelShortestPath.Controls.Add(labelEndNode);
+            panelShortestPath.Controls.Add(labelStartNode);
+            panelShortestPath.Controls.Add(numericUpDownEndNode);
+            panelShortestPath.Controls.Add(numericUpDownStartNode);
+            panelShortestPath.Dock = DockStyle.Top;
+            panelShortestPath.Location = new Point(0, 337);
+            panelShortestPath.Margin = new Padding(3, 4, 3, 4);
+            panelShortestPath.Name = "panelShortestPath";
+            panelShortestPath.Size = new Size(205, 389);
+            panelShortestPath.TabIndex = 21;
             // 
             // lastPanel
             // 
@@ -107,10 +176,28 @@
             lastPanel.Controls.Add(labelCarCapacity);
             lastPanel.Controls.Add(buttonClassicalCW);
             lastPanel.Controls.Add(buttonControl);
-            lastPanel.Location = new Point(0, 767);
+            lastPanel.Location = new Point(0, 261);
             lastPanel.Name = "lastPanel";
-            lastPanel.Size = new Size(205, 216);
+            lastPanel.Size = new Size(205, 130);
             lastPanel.TabIndex = 0;
+            // 
+            // numericCarCapacity
+            // 
+            numericCarCapacity.Location = new Point(105, 52);
+            numericCarCapacity.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            numericCarCapacity.Name = "numericCarCapacity";
+            numericCarCapacity.Size = new Size(84, 27);
+            numericCarCapacity.TabIndex = 3;
+            numericCarCapacity.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            // 
+            // labelCarCapacity
+            // 
+            labelCarCapacity.AutoSize = true;
+            labelCarCapacity.Location = new Point(9, 54);
+            labelCarCapacity.Name = "labelCarCapacity";
+            labelCarCapacity.Size = new Size(90, 20);
+            labelCarCapacity.TabIndex = 2;
+            labelCarCapacity.Text = "Car capacity";
             // 
             // buttonClassicalCW
             // 
@@ -131,23 +218,6 @@
             buttonControl.Text = "Graph check";
             buttonControl.UseVisualStyleBackColor = true;
             buttonControl.Click += buttonControl_Click;
-            // 
-            // panelShortestPath
-            // 
-            panelShortestPath.BackColor = Color.FromArgb(192, 255, 192);
-            panelShortestPath.Controls.Add(label4);
-            panelShortestPath.Controls.Add(textBoxShortestPath);
-            panelShortestPath.Controls.Add(buttonShortestPath);
-            panelShortestPath.Controls.Add(labelEndNode);
-            panelShortestPath.Controls.Add(labelStartNode);
-            panelShortestPath.Controls.Add(numericUpDownEndNode);
-            panelShortestPath.Controls.Add(numericUpDownStartNode);
-            panelShortestPath.Dock = DockStyle.Top;
-            panelShortestPath.Location = new Point(0, 337);
-            panelShortestPath.Margin = new Padding(3, 4, 3, 4);
-            panelShortestPath.Name = "panelShortestPath";
-            panelShortestPath.Size = new Size(205, 264);
-            panelShortestPath.TabIndex = 21;
             // 
             // label4
             // 
@@ -342,58 +412,6 @@
             checkBoxBackgroundVisible.UseVisualStyleBackColor = true;
             checkBoxBackgroundVisible.CheckedChanged += checkBoxBackgroundVisible_CheckedChanged;
             // 
-            // groupBoxState
-            // 
-            groupBoxState.Controls.Add(radioButtonInsertEdge);
-            groupBoxState.Controls.Add(radioButtonInsertNode);
-            groupBoxState.Controls.Add(radioButtonEdit);
-            groupBoxState.Location = new Point(8, 623);
-            groupBoxState.Margin = new Padding(3, 4, 3, 4);
-            groupBoxState.Name = "groupBoxState";
-            groupBoxState.Padding = new Padding(3, 4, 3, 4);
-            groupBoxState.Size = new Size(184, 137);
-            groupBoxState.TabIndex = 2;
-            groupBoxState.TabStop = false;
-            groupBoxState.Text = "Editor state";
-            // 
-            // radioButtonInsertEdge
-            // 
-            radioButtonInsertEdge.AutoSize = true;
-            radioButtonInsertEdge.Location = new Point(13, 96);
-            radioButtonInsertEdge.Margin = new Padding(3, 4, 3, 4);
-            radioButtonInsertEdge.Name = "radioButtonInsertEdge";
-            radioButtonInsertEdge.Size = new Size(104, 24);
-            radioButtonInsertEdge.TabIndex = 2;
-            radioButtonInsertEdge.Text = "Insert edge";
-            radioButtonInsertEdge.UseVisualStyleBackColor = true;
-            radioButtonInsertEdge.CheckedChanged += radioButtonInsertEdge_CheckedChanged;
-            // 
-            // radioButtonInsertNode
-            // 
-            radioButtonInsertNode.AutoSize = true;
-            radioButtonInsertNode.Location = new Point(13, 63);
-            radioButtonInsertNode.Margin = new Padding(3, 4, 3, 4);
-            radioButtonInsertNode.Name = "radioButtonInsertNode";
-            radioButtonInsertNode.Size = new Size(104, 24);
-            radioButtonInsertNode.TabIndex = 1;
-            radioButtonInsertNode.Text = "Insert node";
-            radioButtonInsertNode.UseVisualStyleBackColor = true;
-            radioButtonInsertNode.CheckedChanged += radioButtonInsertNode_CheckedChanged;
-            // 
-            // radioButtonEdit
-            // 
-            radioButtonEdit.AutoSize = true;
-            radioButtonEdit.Checked = true;
-            radioButtonEdit.Location = new Point(13, 29);
-            radioButtonEdit.Margin = new Padding(3, 4, 3, 4);
-            radioButtonEdit.Name = "radioButtonEdit";
-            radioButtonEdit.Size = new Size(56, 24);
-            radioButtonEdit.TabIndex = 0;
-            radioButtonEdit.TabStop = true;
-            radioButtonEdit.Text = "Edit";
-            radioButtonEdit.UseVisualStyleBackColor = true;
-            radioButtonEdit.CheckedChanged += radioButtonEdit_CheckedChanged;
-            // 
             // menuStrip1
             // 
             menuStrip1.ImageScalingSize = new Size(20, 20);
@@ -497,24 +515,6 @@
             propertiesToolStripMenuItem.Text = "Properties";
             propertiesToolStripMenuItem.Click += propertiesToolStripMenuItem_Click;
             // 
-            // labelCarCapacity
-            // 
-            labelCarCapacity.AutoSize = true;
-            labelCarCapacity.Location = new Point(9, 54);
-            labelCarCapacity.Name = "labelCarCapacity";
-            labelCarCapacity.Size = new Size(90, 20);
-            labelCarCapacity.TabIndex = 2;
-            labelCarCapacity.Text = "Car capacity";
-            // 
-            // numericCarCapacity
-            // 
-            numericCarCapacity.Location = new Point(105, 52);
-            numericCarCapacity.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            numericCarCapacity.Name = "numericCarCapacity";
-            numericCarCapacity.Size = new Size(84, 27);
-            numericCarCapacity.TabIndex = 3;
-            numericCarCapacity.Value = new decimal(new int[] { 1, 0, 0, 0 });
-            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -533,21 +533,21 @@
             KeyDown += Form1_KeyDown;
             KeyUp += Form1_KeyUp;
             panelTools.ResumeLayout(false);
-            lastPanel.ResumeLayout(false);
-            lastPanel.PerformLayout();
+            groupBoxState.ResumeLayout(false);
+            groupBoxState.PerformLayout();
             panelShortestPath.ResumeLayout(false);
             panelShortestPath.PerformLayout();
+            lastPanel.ResumeLayout(false);
+            lastPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numericCarCapacity).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownEndNode).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownStartNode).EndInit();
             panelBackground.ResumeLayout(false);
             panelBackground.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)trackBarBackgroundTransparency).EndInit();
-            groupBoxState.ResumeLayout(false);
-            groupBoxState.PerformLayout();
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             contextMenuProperties.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)numericCarCapacity).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }

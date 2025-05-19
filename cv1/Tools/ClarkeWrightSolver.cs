@@ -25,7 +25,8 @@ namespace cv1.Tools
             if (depot == null) throw new Exception("Depot node not defined.");
 
             var customers = network.Nodes.Where(n => n.Type == EnumNodeType.Customer).ToList();
-            var routes = customers.Select(c => new List<NetworkNode> { depot, c, depot }).ToList();
+
+            var routes = customers.Select(c => new List<NetworkNode> { c }).ToList();
 
             var savings = new List<(NetworkNode i, NetworkNode j, float saving)>();
 
@@ -49,22 +50,50 @@ namespace cv1.Tools
 
                 if (routeI == routeJ || routeI == null || routeJ == null) continue;
 
-                float combinedDemand = routeI.Concat(routeJ).Distinct().Sum(n => n.CapacityOrDemand);
+                if (!IsEndNode(routeI, i) || !IsEndNode(routeJ, j))
+                    continue;
+
+                float combinedDemand = routeI.Concat(routeJ)
+                                             .Where(n => n.Type == EnumNodeType.Customer)
+                                             .Sum(n => n.CapacityOrDemand);
+
                 if (combinedDemand > vehicleCapacity) continue;
 
                 routeI.Remove(depot);
                 routeJ.Remove(depot);
-                var mergedRoute = new List<NetworkNode> { depot };
-                mergedRoute.AddRange(routeI);
-                mergedRoute.AddRange(routeJ);
-                mergedRoute.Add(depot);
 
-                routes.Remove(routeI);
+                if (routeI.Last() == i && routeJ.First() == j)
+                {
+                    routeI.AddRange(routeJ);
+                }
+                else if (routeI.First() == i && routeJ.Last() == j)
+                {
+                    routeJ.AddRange(routeI);
+                    routeI = routeJ;
+                }
+                else if (routeI.First() == i && routeJ.First() == j)
+                {
+                    routeI.Reverse();
+                    routeI.AddRange(routeJ);
+                }
+                else if (routeI.Last() == i && routeJ.Last() == j)
+                {
+                    routeJ.Reverse();
+                    routeI.AddRange(routeJ);
+                }
+
+                routeI.Insert(0, depot);
+                routeI.Add(depot);
+
                 routes.Remove(routeJ);
-                routes.Add(mergedRoute);
             }
 
             return routes;
+        }
+
+        private bool IsEndNode(List<NetworkNode> route, NetworkNode node)
+        {
+            return route.First() == node || route.Last() == node;
         }
 
         private float Distance(NetworkNode a, NetworkNode b)
@@ -74,6 +103,7 @@ namespace cv1.Tools
                 (e.EndNode == a && e.StartNode == b));
             return edge?.Length ?? float.PositiveInfinity;
         }
+
     }
 
 }

@@ -50,7 +50,7 @@
             // 
             // numericLength
             // 
-            numericLength.Location = new Point(200, 16);
+            numericLength.Location = new Point(193, 16);
             numericLength.Maximum = new decimal(new int[] { 999999, 0, 0, 0 });
             numericLength.Name = "numericLength";
             numericLength.Size = new Size(150, 27);
@@ -59,21 +59,19 @@
             // chkAutoCalculate
             // 
             chkAutoCalculate.AutoSize = true;
-            chkAutoCalculate.Location = new Point(249, 50);
+            chkAutoCalculate.Location = new Point(325, 54);
             chkAutoCalculate.Name = "chkAutoCalculate";
-            chkAutoCalculate.Size = new Size(101, 24);
+            chkAutoCalculate.Size = new Size(18, 17);
             chkAutoCalculate.TabIndex = 2;
-            chkAutoCalculate.Text = "checkBox1";
             chkAutoCalculate.UseVisualStyleBackColor = true;
             // 
             // chkEnabled
             // 
             chkEnabled.AutoSize = true;
-            chkEnabled.Location = new Point(249, 80);
+            chkEnabled.Location = new Point(325, 83);
             chkEnabled.Name = "chkEnabled";
-            chkEnabled.Size = new Size(101, 24);
+            chkEnabled.Size = new Size(18, 17);
             chkEnabled.TabIndex = 3;
-            chkEnabled.Text = "checkBox2";
             chkEnabled.UseVisualStyleBackColor = true;
             // 
             // buttonOK

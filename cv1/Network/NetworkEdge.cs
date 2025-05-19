@@ -51,11 +51,8 @@ namespace cv1.Network
             Point pStart = startNode.Position;
             Point pEnd = endNode.Position;
 
-            var penColor = Selected ? Color.Green : Color.Black;
+            var penColor = Selected ? Color.Blue : Color.Black;
             using Pen p = new(penColor, 2.0f);
-
-            if (Selected)
-                p.Color = Color.Blue; 
 
             g.DrawLine(p, pStart, pEnd);
 
