@@ -594,13 +594,26 @@ namespace cv1
 
         private void DisplayRoutes(List<List<NetworkNode>> routes)
         {
+            foreach (var edge in network.Edges)
+                edge.RouteIndex = null;
             String message = "";
+            int r = 0;
             foreach (var route in routes)
             {
                 for (int i = 0; i < route.Count - 1; i++)
                 {
+                    var a = route[i];
+                    var b = route[i + 1];
+
+                    var edge = network.Edges.FirstOrDefault(e =>
+                        (e.StartNode == a && e.EndNode == b) ||
+                        (e.EndNode == a && e.StartNode == b));
+
+                    if (edge != null)
+                        edge.RouteIndex = r;
                     message += $"{route[i].Name} -> ";
                 }
+                r++;
                 message += $"{route.Last().Name}\n";
             }
             Console.WriteLine(message);

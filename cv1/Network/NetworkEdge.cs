@@ -45,14 +45,19 @@ namespace cv1.Network
         public int EndNodeID { get { return endNodeID; } }
 
         public bool Selected { get; set; }
+        public int? RouteIndex { get; set; } = null;
+
 
         public void Draw(Graphics g)
         {
             Point pStart = startNode.Position;
             Point pEnd = endNode.Position;
 
-            var penColor = Selected ? Color.Blue : Color.Black;
-            using Pen p = new(penColor, 2.0f);
+            Color color = RouteIndex.HasValue
+                ? GetColorByIndex(RouteIndex.Value)
+                : Color.Black;
+
+            using Pen p = new(color, RouteIndex.HasValue ? 3.5f : 2f);
 
             g.DrawLine(p, pStart, pEnd);
 
@@ -65,6 +70,16 @@ namespace cv1.Network
 
             using Font f = new(FontFamily.GenericSansSerif, 6);
             g.DrawString(edgeInfo, f, Brushes.Black, new PointF(posX, posY));
+        }
+        private Color GetColorByIndex(int index)
+        {
+            Color[] palette = new Color[]
+            {
+                Color.Red, Color.Blue, Color.Green, Color.Orange,
+                Color.Purple, Color.Cyan, Color.Brown, Color.Magenta
+            };
+
+            return palette[index % palette.Length];
         }
 
         public bool IsHitByMouse(Point mousePosition)
