@@ -46,7 +46,6 @@ namespace cv1.Tools
 
             var customers = network.Nodes.Where(n => n.Type == EnumNodeType.Customer).ToList();
 
-            // Inicializuj trasy bez depotu
             var routes = customers.Select(c => new List<NetworkNode> { c }).ToList();
             Console.WriteLine($"Počet počiatočných trás: {routes.Count}");
 
@@ -120,7 +119,6 @@ namespace cv1.Tools
 
             }
 
-            // Pridaj depot na začiatok a koniec každej trasy
             foreach (var route in routes)
             {
                 route.Insert(0, depot);

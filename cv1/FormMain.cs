@@ -596,6 +596,7 @@ namespace cv1
         {
             foreach (var edge in network.Edges)
                 edge.RouteIndex = null;
+            var pathfinder = new ShortestPath(network);
             String message = "";
             int r = 0;
             foreach (var route in routes)
@@ -605,12 +606,30 @@ namespace cv1
                     var a = route[i];
                     var b = route[i + 1];
 
-                    var edge = network.Edges.FirstOrDefault(e =>
+                    var directEdge = network.Edges.FirstOrDefault(e =>
                         (e.StartNode == a && e.EndNode == b) ||
                         (e.EndNode == a && e.StartNode == b));
 
-                    if (edge != null)
-                        edge.RouteIndex = r;
+                    if (directEdge != null)
+                    {
+                        directEdge.RouteIndex = r;
+                    }
+                    else
+                    {
+                        var (pathNodes, _) = pathfinder.FindPath(a, b);
+                        for (int j = 0; j < pathNodes.Count - 1; j++)
+                        {
+                            var ea = pathNodes[j];
+                            var eb = pathNodes[j + 1];
+
+                            var edgeInPath = network.Edges.FirstOrDefault(e =>
+                                (e.StartNode == ea && e.EndNode == eb) ||
+                                (e.EndNode == ea && e.StartNode == eb));
+
+                            if (edgeInPath != null)
+                                edgeInPath.RouteIndex = r;
+                        }
+                    }
                     message += $"{route[i].Name} -> ";
                 }
                 r++;
