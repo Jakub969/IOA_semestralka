@@ -1,2 +1,2 @@
-Semestrálna práca na predmet Implementácia optimalizaènıch algoritmov. Jedná sa o editor dopravnej siete s rôznymi optimalizacnımi algoritmami.
-![obrázok](https://alternativetransport.wordpress.com/wp-content/uploads/2018/04/grid-diffuse-p.png)
+SemestrÃ¡lna prÃ¡ca na predmet ImplementÃ¡cia optimalizaÄnÃ½ch algoritmov. JednÃ¡ sa o editor dopravnej siete s rÃ´znymi optimalizacnÃ½mi algoritmami.
+![obrÃ¡zok](https://alternativetransport.wordpress.com/wp-content/uploads/2018/04/grid-diffuse-p.png)
